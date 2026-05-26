@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Panda Embroidery Family</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f7ff;--card:#fff;--text:#10152f;--muted:#66708f;--line:#e6e9f5;
+  --purple:#6d28d9;--purple2:#8b5cf6;--soft:#f1edff;--green:#22c55e;
+  --red:#ef4444;--orange:#f97316;--shadow:0 18px 45px rgba(31,41,75,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
+.app{min-height:100vh;display:flex}
+.sidebar{width:285px;background:#fff;border-right:1px solid var(--line);padding:22px 18px;display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;align-items:center;gap:13px}
+.logo{width:56px;height:56px;border-radius:16px;background:#fff;display:grid;place-items:center;font-size:34px;box-shadow:var(--shadow)}
+.brand h1{font-size:25px;line-height:1.03;margin:0;font-weight:750;letter-spacing:-.6px}
+.brand p{margin:4px 0 0;color:var(--muted);font-size:13px;font-weight:500}
+.nav-section{border-top:1px solid var(--line);padding-top:14px}
+.nav-title{font-size:11px;color:#94a0ba;text-transform:uppercase;font-weight:800;letter-spacing:.08em;margin:0 0 8px 10px}
+.nav-item{width:100%;border:0;background:transparent;color:#26304f;display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:14px;font-size:14px;font-weight:600;cursor:pointer}
+.nav-item.active,.nav-item:hover{background:var(--soft);color:var(--purple)}
+.ico{width:25px;height:25px;border-radius:8px;display:grid;place-items:center;background:#eef2ff;color:var(--purple);font-size:14px;flex:none}
+.badge{margin-left:auto;background:#dffbea;color:#16a34a;border-radius:99px;padding:3px 8px;font-size:10px;font-weight:800}
+.premium{margin-top:auto;border-radius:22px;padding:22px;background:linear-gradient(145deg,#f4edff,#fff);border:1px solid #eadfff}
+.diamond{width:44px;height:44px;border-radius:14px;background:#efe3ff;display:grid;place-items:center;font-size:25px;margin-bottom:12px}
+.premium h3{margin:0 0 7px;font-size:16px}.premium p{margin:0 0 16px;color:var(--muted);font-size:12px;line-height:1.5}
+.btn{border:0;border-radius:13px;padding:12px 18px;font-weight:700;cursor:pointer;font-size:14px}
+.btn.primary{background:linear-gradient(135deg,var(--purple),#7c3aed);color:white;box-shadow:0 10px 20px rgba(109,40,217,.22)}
+.btn.light{background:#fff;border:1px solid var(--line);color:#1c2542}.btn:disabled{opacity:.45;cursor:not-allowed}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{height:78px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px}
+.menu{width:42px;height:42px;border-radius:13px;border:1px solid var(--line);background:#fff;font-size:22px;color:var(--purple)}
+.top-actions{display:flex;align-items:center;gap:14px}.circle{width:42px;height:42px;border-radius:50%;background:#315a9b;color:#fff;display:grid;place-items:center;font-weight:700}
+.user{display:flex;align-items:center;gap:10px;font-size:13px}.user b{display:block}.user span{color:var(--purple);font-size:12px;font-weight:700}
+.content{padding:22px;display:grid;grid-template-columns:minmax(650px,1fr) 330px;gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.filebar{padding:18px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.file-meta{display:flex;align-items:center;gap:14px}.file-icon{width:45px;height:50px;border-radius:11px;background:#f1ebff;color:var(--purple);display:grid;place-items:center;font-weight:800;border:1px solid #dacbff}
+.file-meta h2{margin:0;font-size:17px}.file-meta p{margin:6px 0 0;color:#475176;font-size:13px}
+.viewer-card{overflow:hidden}.viewer-tabs{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.tabs{display:flex;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.tab{border:0;background:#fff;padding:12px 22px;font-weight:700;color:#15213f;cursor:pointer;border-right:1px solid var(--line)}
+.tab:last-child{border-right:0}.tab.active{background:var(--soft);color:var(--purple)}
+.viewer-tools{display:flex;gap:10px}.toolbtn{width:40px;height:40px;border-radius:12px;background:#fff;border:1px solid var(--line);font-size:18px;cursor:pointer}
+.preview{margin:0 16px 0;height:395px;border-radius:16px;overflow:hidden;background:#f7efe5;position:relative;border:1px solid #eee0cf}
+#canvas{width:100%;height:100%;display:block;background:linear-gradient(135deg,#f6eadc,#fff9f0)}
+.empty{position:absolute;inset:0;display:grid;place-items:center;text-align:center;pointer-events:none}
+.empty-box{background:rgba(255,255,255,.82);border:2px dashed #d7c6ff;border-radius:24px;padding:42px;max-width:430px}
+.empty-box h2{margin:8px 0;font-size:25px}.empty-box p{color:var(--muted);margin:0 0 16px}
+.zoom-card{position:absolute;left:16px;top:16px;background:rgba(26,26,42,.72);color:#fff;border-radius:14px;padding:10px 14px;font-size:13px}
+.playbar{display:flex;align-items:center;gap:18px;padding:16px 20px}
+.play{width:44px;height:44px;border-radius:50%;border:0;background:var(--purple);color:#fff;font-size:18px;cursor:pointer}
+.progress{height:6px;flex:1;background:#e7e5f4;border-radius:999px;position:relative}.progress i{display:block;height:100%;width:0;background:var(--purple);border-radius:999px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:14px 0}.stat{padding:18px 20px;display:flex;align-items:center;gap:12px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}.stat .sico{width:36px;height:36px;border-radius:12px;background:#fff3e7;display:grid;place-items:center}.stat small{display:block;color:var(--muted);font-weight:600}.stat b{font-size:18px}
+.bottom-grid{display:grid;grid-template-columns:2fr .9fr;gap:14px}.density,.quality,.resize,.quick,.info{padding:18px}
+.density h3,.quality h3,.side h3{margin:0 0 14px;font-size:17px}.heat{height:120px;border-radius:14px;background:linear-gradient(90deg,#1d8fff,#28c76f,#ffe100,#ff901a,#ff2e4d);opacity:.95}
+.legend{display:flex;gap:16px;margin-top:13px;font-size:12px;color:#3d4666;flex-wrap:wrap}.dot{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:7px}
+.quality{text-align:center}.score{width:130px;height:130px;border-radius:50%;border:12px solid #2ac653;margin:5px auto;display:grid;place-items:center;font-size:40px;font-weight:800}.score span{font-size:14px;color:var(--muted)}
+.good{background:#e8fbe9;color:#16a34a;border-radius:12px;padding:10px;font-weight:700}
+.side{display:flex;flex-direction:column;gap:14px}.segment{display:grid;grid-template-columns:1fr 1fr 1fr;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:12px 0}
+.segment button{padding:12px;border:0;background:#fff;font-weight:700}.segment button.active{background:var(--soft);color:var(--purple)}
+.scale-box{display:flex;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:7px}.scale-box input{flex:1;border:0;padding:14px;font-size:18px;font-weight:700;outline:none}.scale-box span{width:56px;display:grid;place-items:center;border-left:1px solid var(--line);font-weight:800;color:var(--muted)}
+.range{height:5px;background:#e9e6f6;margin:18px 0;border-radius:999px;position:relative}.range:before{content:"";position:absolute;left:0;top:0;bottom:0;width:58%;background:var(--purple);border-radius:999px}
+.presets{display:flex;gap:8px}.presets button{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px;font-weight:700;cursor:pointer}.presets button.active{color:var(--purple);border-color:var(--purple);background:#fbf8ff}
+.newsize{display:grid;grid-template-columns:1fr 24px 1fr;align-items:center;text-align:center;margin:16px 0;background:#fafbff;border-radius:14px;padding:14px}.newsize b{font-size:20px}.newsize small{display:block;color:var(--muted)}
+.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.quick-item{text-align:center;font-size:11px;font-weight:700;color:#202a48;cursor:pointer;border:0;background:transparent}
+.quick-icon{width:48px;height:48px;border-radius:13px;margin:0 auto 8px;display:grid;place-items:center;font-size:20px}
+.info-row{display:flex;justify-content:space-between;font-size:13px;border-bottom:1px solid #f0f2fa;padding:9px 0}.info-row span{color:var(--muted)}
+#analysis{font-size:13px;line-height:1.5;color:#34405d}.toast{position:fixed;right:24px;bottom:24px;background:#111827;color:#fff;padding:14px 18px;border-radius:14px;box-shadow:var(--shadow);display:none;z-index:10}
+.loading{position:fixed;inset:0;background:rgba(16,21,47,.35);display:none;place-items:center;z-index:9}.loadbox{background:#fff;border-radius:20px;padding:22px 30px;box-shadow:var(--shadow);font-weight:800}
+@media(max-width:1200px){.content{grid-template-columns:1fr}.sidebar{display:none}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<input type="file" id="fileInput" accept=".dst,.pes,.jef,.vp3,.hus,.exp,.xxx,.emb,.sew" style="display:none">
+<div class="loading" id="loading"><div class="loadbox" id="loadText">Loading...</div></div>
+<div class="toast" id="toast"></div>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">🐼</div><div><h1>Panda<br>Embroidery Family</h1><p>Design. Preview. Perfect.</p></div></div>
+    <div class="nav-section">
+      <button class="nav-item active"><span class="ico">⌂</span>Dashboard</button>
+      <button class="nav-item" onclick="openFile()"><span class="ico">□</span>Open File</button>
+      <button class="nav-item" onclick="exportPDF()"><span class="ico">▣</span>PDF Report</button>
+      <button class="nav-item" onclick="downloadPNG()"><span class="ico">◷</span>PNG Preview</button>
+    </div>
+    <div class="nav-section">
+      <p class="nav-title">Tools</p>
+      <button class="nav-item" onclick="saveResized()"><span class="ico">↗</span>Resize Design</button>
+      <button class="nav-item" onclick="analyzeFile()"><span class="ico">◎</span>Quality Analyze</button>
+      <button class="nav-item" onclick="repairFile()"><span class="ico">✂</span>Auto Repair</button>
+      <button class="nav-item" onclick="setMode('density')"><span class="ico">♨</span>Density Map</button>
+      <button class="nav-item" onclick="setMode('trueview')"><span class="ico">▣</span>TrueView</button>
+    </div>
+    <div class="premium"><div class="diamond">💎</div><h3>Premium Plan</h3><p>Modern embroidery viewer, resize, repair, PDF and TrueView tools.</p><button class="btn primary">Active</button></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="menu">≡</button>
+      <div class="top-actions">
+        <button class="btn primary" onclick="openFile()">📂 Open File</button>
+        <button class="btn light" onclick="exportPDF()" id="pdfBtn" disabled>PDF Report</button>
+        <button class="btn light" onclick="saveCurrent()" id="saveBtn" disabled>Download File</button>
+        <div class="user"><div class="circle">P</div><div><b>Panda Family</b><span>Working Viewer</span></div></div>
+      </div>
+    </header>
+
+    <div class="content">
+      <section>
+        <div class="card filebar">
+          <div class="file-meta">
+            <div class="file-icon" id="fmtBox">DST</div>
+            <div><h2 id="fileName">No file loaded</h2><p id="fileMeta">Upload DST, PES, JEF, VP3, HUS, EXP, XXX, EMB</p></div>
+          </div>
+          <div><button class="btn light" onclick="openFile()">← Open</button><button class="btn primary" onclick="saveCurrent()" id="downloadBtn" disabled>↓ Download</button></div>
+        </div>
+
+        <div class="card viewer-card">
+          <div class="viewer-tabs">
+            <div class="tabs">
+              <button class="tab active" id="tabTrue" onclick="setMode('trueview')">TrueView</button>
+              <button class="tab" id="tabReal" onclick="setMode('real')">2D View</button>
+              <button class="tab" id="tabWire" onclick="setMode('wire')">Stitch Map</button>
+              <button class="tab" id="tabDensity" onclick="setMode('density')">Density</button>
+            </div>
+            <div class="viewer-tools"><button class="toolbtn" onclick="zoomIn()">＋</button><button class="toolbtn" onclick="zoomOut()">－</button><button class="toolbtn" onclick="fitView()">↗</button></div>
+          </div>
+          <div class="preview" id="preview">
+            <canvas id="canvas"></canvas>
+            <div class="empty" id="empty"><div class="empty-box"><div style="font-size:48px">🧵</div><h2>Drop Embroidery File</h2><p>Open DST/PES/JEF and preview stitches instantly.</p><button class="btn primary" onclick="openFile()">Choose File</button></div></div>
+            <div class="zoom-card">Zoom<br><span id="zoomText">100%</span></div>
+          </div>
+          <div class="playbar"><button class="play" onclick="toggleSim()">▶</button><div class="progress"><i id="progress"></i></div><span id="simText">0 / 0</span><button class="btn light">1.0x⌄</button></div>
+        </div>
+
+        <div class="card stats">
+          <div class="stat"><span class="sico">✣</span><div><small>Stitch Count</small><b id="stitches">—</b></div></div>
+          <div class="stat"><span class="sico">↗</span><div><small>Dimensions</small><b id="dims">—</b></div></div>
+          <div class="stat"><span class="sico">🎨</span><div><small>Colors</small><b id="colors">—</b></div></div>
+          <div class="stat"><span class="sico">▣</span><div><small>Trims</small><b id="trims">—</b></div></div>
+          <div class="stat"><span class="sico">⏱</span><div><small>Est. Time</small><b id="time">—</b></div></div>
+        </div>
+
+        <div class="bottom-grid">
+          <div class="card density"><h3>Stitch Density Map</h3><div class="heat"></div><div class="legend"><span><i class="dot" style="background:#1d8fff"></i>Low</span><span><i class="dot" style="background:#28c76f"></i>Safe</span><span><i class="dot" style="background:#ffe100"></i>Normal</span><span><i class="dot" style="background:#ff901a"></i>High</span><span><i class="dot" style="background:#ff2e4d"></i>Risk</span></div></div>
+          <div class="card quality"><h3>Quality Score</h3><div class="score" id="score">—<span>/100</span></div><div class="good" id="scoreText">Analyze file</div></div>
+        </div>
+      </section>
+
+      <aside class="side">
+        <div class="card resize">
+          <h3>Resize Design</h3>
+          <label>Scale By</label><div class="segment"><button class="active">%</button><button>Inches</button><button>mm</button></div>
+          <label>Scale (%)</label><div class="scale-box"><input id="scaleInput" value="100" type="number" min="10" max="500" oninput="updateScalePreview()"><span>%</span></div>
+          <div class="range"></div><div class="presets"><button onclick="setScale(50)">50%</button><button onclick="setScale(75)">75%</button><button onclick="setScale(100)" class="active">100%</button><button onclick="setScale(150)">150%</button><button onclick="setScale(200)">200%</button></div>
+          <div class="newsize"><div><b id="newW">—</b><small>Width</small></div><b>→</b><div><b id="newH">—</b><small>Height</small></div></div>
+          <button class="btn primary" style="width:100%" onclick="applyScale()">✣ Apply Size</button>
+          <button class="btn light" style="width:100%;margin-top:10px" onclick="saveResized()">Save Resized + Recalc</button>
+        </div>
+
+        <div class="card quick">
+          <h3>Quick Tools</h3>
+          <div class="quick-grid">
+            <button class="quick-item" onclick="analyzeFile()"><div class="quick-icon" style="background:#dcfce7;color:#16a34a">◎</div>Quality Analyze</button>
+            <button class="quick-item" onclick="repairFile()"><div class="quick-icon" style="background:#ffe4ef;color:#ff2e6d">✂</div>Auto Repair</button>
+            <button class="quick-item" onclick="setMode('density')"><div class="quick-icon" style="background:#eaf2ff;color:#2563eb">♨</div>Density Map</button>
+            <button class="quick-item" onclick="exportPDF()"><div class="quick-icon" style="background:#fff0dc;color:#f97316">▤</div>PDF Report</button>
+            <button class="quick-item" onclick="setMode('trueview')"><div class="quick-icon" style="background:#f2e9ff;color:#7c3aed">⬡</div>TrueView</button>
+            <button class="quick-item" onclick="toggleSim()"><div class="quick-icon" style="background:#e0faff;color:#0891b2">☼</div>Stitch Simulator</button>
+          </div>
+        </div>
+
+        <div class="card info">
+          <h3>Design Information</h3>
+          <div class="info-row"><span>File Name</span><b id="iName">—</b></div>
+          <div class="info-row"><span>File Type</span><b id="iType">—</b></div>
+          <div class="info-row"><span>Thread</span><b id="iThread">—</b></div>
+          <div class="info-row"><span>Density</span><b id="iDensity">—</b></div>
+          <div class="info-row"><span>Jumps</span><b id="iJumps">—</b></div>
+          <div id="analysis" style="margin-top:12px"></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<script>
+const API = "https://panda-viewer.onrender.com";
+  ? 'http://localhost:5000'
+  : 'https://panda-embroidery-api-1.onrender.com';
+
+let D=null, OD=null, curFile=null, mode='trueview', zoom=1, offsetX=0, offsetY=0;
+let running=false, runIndex=0, timer=null;
+const fi=document.getElementById('fileInput');
+const canvas=document.getElementById('canvas');
+const ctx=canvas.getContext('2d');
+const preview=document.getElementById('preview');
+
+function showLoad(t){document.getElementById('loadText').textContent=t;document.getElementById('loading').style.display='grid'}
+function hideLoad(){document.getElementById('loading').style.display='none'}
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.style.display='block';setTimeout(()=>el.style.display='none',3500)}
+function openFile(){fi.value='';fi.click()}
+fi.onchange=()=>handleFile(fi.files[0]);
+document.addEventListener('dragover',e=>e.preventDefault());
+document.addEventListener('drop',e=>{e.preventDefault();if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0])});
+
+async function handleFile(file){
+  if(!file)return;
+  curFile=file;showLoad('Parsing '+file.name+'...');
+  const fd=new FormData();fd.append('file',file);
+  try{
+    const r=await fetch(API+'/api/parse',{method:'POST',body:fd});
+    if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error||'Server '+r.status)}
+    const j=await r.json();
+    D=j;OD=JSON.parse(JSON.stringify(j));
+    document.getElementById('empty').style.display='none';
+    enableButtons();updateUI();fitView();hideLoad();toast('File loaded successfully');
+  }catch(e){hideLoad();alert('Parse error: '+e.message+'\\nAPI: '+API)}
+}
+function enableButtons(){['pdfBtn','saveBtn','downloadBtn'].forEach(id=>document.getElementById(id).disabled=false)}
+function updateUI(){
+  if(!D)return;
+  const n=D.filename||curFile?.name||'design';
+  document.getElementById('fileName').textContent=n;
+  document.getElementById('fmtBox').textContent=D.format||'DST';
+  document.getElementById('fileMeta').textContent=`${D.width_in}" × ${D.height_in}" • ${Number(D.stitch_count).toLocaleString()} stitches • ${D.color_count} colors • ${D.format}`;
+  document.getElementById('stitches').textContent=Number(D.stitch_count).toLocaleString();
+  document.getElementById('dims').textContent=`${D.width_in}" × ${D.height_in}"`;
+  document.getElementById('colors').textContent=D.color_count;
+  document.getElementById('trims').textContent=D.trim_count;
+  document.getElementById('time').textContent=(D.time_min||0)+'m';
+  document.getElementById('iName').textContent=n;
+  document.getElementById('iType').textContent=D.format;
+  document.getElementById('iThread').textContent='~'+D.thread_m+'m';
+  document.getElementById('iDensity').textContent=D.density+' st/cm²';
+  document.getElementById('iJumps').textContent=Number(D.jump_count).toLocaleString();
+  updateScalePreview();
+}
+function resizeCanvas(){const r=preview.getBoundingClientRect();canvas.width=r.width;canvas.height=r.height;render()}
+window.addEventListener('resize',resizeCanvas);setTimeout(resizeCanvas,100);
+
+function fitView(){
+  if(!D){resizeCanvas();return}
+  resizeCanvas();
+  const b=D.bounds,w=(b.maxX-b.minX)||1,h=(b.maxY-b.minY)||1;
+  zoom=Math.min(canvas.width*.78/w,canvas.height*.78/h);
+  offsetX=0;offsetY=0;render();
+}
+function zoomIn(){zoom*=1.2;render()} function zoomOut(){zoom/=1.2;render()}
+function setMode(m){
+  mode=m;
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  if(m==='trueview')document.getElementById('tabTrue').classList.add('active');
+  if(m==='real')document.getElementById('tabReal').classList.add('active');
+  if(m==='wire')document.getElementById('tabWire').classList.add('active');
+  if(m==='density')document.getElementById('tabDensity').classList.add('active');
+  render();
+}
+function shade(hex,amt){hex=(hex||'#333').replace('#','');if(hex.length!==6)return'#333';let r=parseInt(hex.substr(0,2),16)+amt,g=parseInt(hex.substr(2,2),16)+amt,b=parseInt(hex.substr(4,2),16)+amt;r=Math.max(0,Math.min(255,r));g=Math.max(0,Math.min(255,g));b=Math.max(0,Math.min(255,b));return '#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('')}
+function render(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle='#fff8ed';ctx.fillRect(0,0,canvas.width,canvas.height);
+  document.getElementById('zoomText').textContent=Math.round(zoom*100)+'%';
+  if(!D)return;
+  const b=D.bounds,cx=(b.minX+b.maxX)/2,cy=(b.minY+b.maxY)/2;
+  ctx.save();ctx.translate(canvas.width/2+offsetX,canvas.height/2+offsetY);ctx.scale(zoom,zoom);ctx.translate(-cx,-cy);
+  if(mode==='density'){renderDensity();ctx.restore();return}
+  const max=running?runIndex:Infinity;let total=0;
+  D.colors.forEach(col=>{
+    const pts=col.points||[]; if(!pts.length)return;
+    if(mode==='trueview'){
+      for(let i=1;i<pts.length;i++){
+        if(total++>max)break;
+        const p0=pts[i-1],p1=pts[i]; if(p1[2]!==0)continue;
+        const color=col.color||'#111',dark=shade(color,-45),light=shade(color,55);
+        ctx.lineCap='round';ctx.lineJoin='round';
+        ctx.strokeStyle='rgba(0,0,0,.18)';ctx.lineWidth=4/zoom;ctx.beginPath();ctx.moveTo(p0[0]+1/zoom,p0[1]+1/zoom);ctx.lineTo(p1[0]+1/zoom,p1[1]+1/zoom);ctx.stroke();
+        ctx.strokeStyle=dark;ctx.lineWidth=3/zoom;ctx.beginPath();ctx.moveTo(p0[0],p0[1]);ctx.lineTo(p1[0],p1[1]);ctx.stroke();
+        ctx.strokeStyle=color;ctx.lineWidth=2.2/zoom;ctx.beginPath();ctx.moveTo(p0[0],p0[1]);ctx.lineTo(p1[0],p1[1]);ctx.stroke();
+        ctx.strokeStyle=light;ctx.lineWidth=.7/zoom;ctx.beginPath();ctx.moveTo(p0[0],p0[1]);ctx.lineTo(p1[0],p1[1]);ctx.stroke();
+      }
+    }else{
+      ctx.strokeStyle=mode==='wire'?'#111':(col.color||'#111');ctx.lineWidth=1.3/zoom;ctx.beginPath();let up=true;
+      for(let i=0;i<pts.length;i++){if(total++>max)break;const [x,y,t]=pts[i];if(t!==0||up){ctx.moveTo(x,y);up=false}else ctx.lineTo(x,y)}
+      ctx.stroke();
+    }
+  });
+  ctx.restore();
+}
+function renderDensity(){
+  const grid=18,map=new Map();
+  D.colors.forEach(c=>(c.points||[]).forEach(p=>{if(p[2]!==0)return;const k=Math.floor(p[0]/grid)+','+Math.floor(p[1]/grid);map.set(k,(map.get(k)||0)+1)}));
+  const mx=Math.max(...map.values(),1);
+  map.forEach((v,k)=>{const [gx,gy]=k.split(',').map(Number);ctx.fillStyle=`rgba(239,68,68,${Math.min(.75,v/mx)})`;ctx.fillRect(gx*grid,gy*grid,grid,grid)});
+}
+function toggleSim(){
+  if(!D)return;
+  if(running){running=false;clearInterval(timer);return}
+  running=true;runIndex=0;
+  const total=D.colors.reduce((s,c)=>s+(c.points?.length||0),0);
+  timer=setInterval(()=>{runIndex+=180;document.getElementById('progress').style.width=Math.min(100,runIndex/total*100)+'%';document.getElementById('simText').textContent=Math.min(runIndex,total).toLocaleString()+' / '+total.toLocaleString();if(runIndex>=total){clearInterval(timer);running=false}render()},40)
+}
+function setScale(v){document.getElementById('scaleInput').value=v;updateScalePreview()}
+function updateScalePreview(){if(!D)return;const s=(parseFloat(document.getElementById('scaleInput').value)||100)/100;document.getElementById('newW').textContent=(D.width_in*s).toFixed(2)+'"';document.getElementById('newH').textContent=(D.height_in*s).toFixed(2)+'"'}
+function applyScale(){if(!D)return;const s=(parseFloat(document.getElementById('scaleInput').value)||100)/100;D.width_mm=+(OD.width_mm*s).toFixed(1);D.height_mm=+(OD.height_mm*s).toFixed(1);D.width_in=+(D.width_mm/25.4).toFixed(2);D.height_in=+(D.height_mm/25.4).toFixed(2);updateUI();toast('Size applied. Click Save Resized + Recalc.')}
+async function saveCurrent(){if(!D||!curFile)return;await downloadFile(false)}
+async function saveResized(){if(!D||!curFile)return;await downloadFile(true)}
+async function downloadFile(forceResize){
+  const ext=(D.format||curFile.name.split('.').pop()).toLowerCase();
+  const changed=forceResize||Math.abs(D.width_mm-OD.width_mm)>.05||Math.abs(D.height_mm-OD.height_mm)>.05;
+  showLoad(changed?'Saving resized + recalculated file...':'Converting file...');
+  const fd=new FormData();fd.append('file',curFile);fd.append('format',ext);
+  let url=API+'/api/convert';
+  if(changed){url=API+'/api/resize';fd.append('width_mm',D.width_mm);fd.append('height_mm',D.height_mm);fd.append('recalculate','true')}
+  try{
+    const r=await fetch(url,{method:'POST',body:fd});
+    if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error||'Server '+r.status)}
+    const oldS=r.headers.get('X-Old-Stitches'),newS=r.headers.get('X-New-Stitches');
+    const blob=await r.blob(),u=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=u;a.download=(D.filename||curFile.name).replace(/\.[^.]+$/,'')+(changed?'_resized':'')+'.'+ext;a.click();URL.revokeObjectURL(u);hideLoad();
+    if(oldS&&newS)toast(`Saved. Old stitches: ${Number(oldS).toLocaleString()} | New: ${Number(newS).toLocaleString()}`);else toast('Downloaded');
+  }catch(e){hideLoad();alert('Save error: '+e.message)}
+}
+async function exportPDF(){
+  if(!D)return;
+  showLoad('Generating PDF...');
+  try{
+    const r=await fetch(API+'/api/pdf',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({design:D,preview_b64:canvas.toDataURL('image/png')})});
+    if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error||'Server '+r.status)}
+    const blob=await r.blob(),u=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=u;a.download=(D.filename||'design')+'_report.pdf';a.click();URL.revokeObjectURL(u);hideLoad();toast('PDF downloaded');
+  }catch(e){hideLoad();alert('PDF error: '+e.message)}
+}
+function downloadPNG(){if(!D)return;const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download=(D.filename||'preview')+'.png';a.click()}
+async function analyzeFile(){
+  if(!curFile)return;
+  showLoad('Analyzing quality...');
+  const fd=new FormData();fd.append('file',curFile);
+  try{
+    const r=await fetch(API+'/api/analyze',{method:'POST',body:fd});
+    if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error||'Server '+r.status)}
+    const j=await r.json(),a=j.analysis||{};
+    document.getElementById('score').innerHTML=(a.score??'—')+'<span>/100</span>';
+    document.getElementById('scoreText').textContent=(a.score||0)>80?'Great quality!':(a.score||0)>60?'Needs review':'Repair recommended';
+    document.getElementById('analysis').innerHTML=`<b>Analysis</b><br>Avg stitch: ${a.avg_stitch_length_mm}mm<br>Max density: ${a.max_density_st_cm2} st/cm²<br>Long stitches: ${a.long_stitches_count}<br>Micro stitches: ${a.micro_stitches_count}<br>${(a.warnings||[]).map(w=>'⚠ '+w).join('<br>')}`;
+    hideLoad();toast('Quality analyzed');
+  }catch(e){hideLoad();alert('Analyze error: '+e.message)}
+}
+async function repairFile(){
+  if(!curFile)return;
+  showLoad('Repairing file...');
+  const ext=(D?.format||curFile.name.split('.').pop()).toLowerCase();
+  const fd=new FormData();fd.append('file',curFile);fd.append('format',ext);fd.append('max_stitch_mm','6');fd.append('min_stitch_mm','0.2');
+  try{
+    const r=await fetch(API+'/api/repair',{method:'POST',body:fd});
+    if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error||'Server '+r.status)}
+    const blob=await r.blob(),u=URL.createObjectURL(blob),a=document.createElement('a');
+    const added=r.headers.get('X-Repair-Added-Stitches')||0,removed=r.headers.get('X-Repair-Removed-Micro-Stitches')||0;
+    a.href=u;a.download=curFile.name.replace(/\.[^.]+$/,'')+'_repaired.'+ext;a.click();URL.revokeObjectURL(u);hideLoad();toast(`Repair done. Added ${added}, removed ${removed}`);
+  }catch(e){hideLoad();alert('Repair error: '+e.message)}
+}
+</script>
+</body>
+</html>
