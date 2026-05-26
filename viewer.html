@@ -153,7 +153,7 @@ button,input,select{font-family:inherit}
         <div class="row"><span>Status</span><b id="bridgeStatus">Not checked</b></div>
         <div class="row"><span>URL</span><b>localhost:7070</b></div>
         <button class="btn" style="width:100%;margin-top:12px" onclick="checkBridge()">Check Bridge</button>
-        <button class="btn primary" style="width:100%;margin-top:10px" onclick="wilcomConvert()" id="wilcomBtn" disabled>Convert via Wilcom</button>
+        <button class="btn primary" style="width:100%;margin-top:10px" onclick="wilcomConvert()" id="wilcomBtn" disabled>Wilcom Automation</button><button class="btn green" style="width:100%;margin-top:10px" onclick="checkWilcomExport()">Check Export & Download</button>
       </div>
 
       <div class="card">
@@ -182,7 +182,37 @@ function toast(t){const el=document.getElementById('toast');el.textContent=t;el.
 function load(t){document.getElementById('loaderText').textContent=t;document.getElementById('loader').style.display='grid'} function unload(){document.getElementById('loader').style.display='none'}
 function openFile(){fileInput.value='';fileInput.click()} fileInput.onchange=()=>handleFile(fileInput.files[0]);
 document.addEventListener('dragover',e=>e.preventDefault()); document.addEventListener('drop',e=>{e.preventDefault();if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0])});
-async function handleFile(file){if(!file)return;curFile=file;load('Parsing '+file.name+'...');let fd=new FormData();fd.append('file',file);try{let r=await fetch(API+'/api/parse',{method:'POST',body:fd});if(!r.ok){let e=await r.json().catch(()=>({}));throw new Error(e.error||'API '+r.status)}D=await r.json();OD=JSON.parse(JSON.stringify(D));document.getElementById('drop').style.display='none';['pdfBtn','saveBtn','resizeSaveBtn','wilcomBtn'].forEach(id=>{let x=document.getElementById(id);if(x)x.disabled=false});updateUI();fitView();toast('Design loaded')}catch(e){alert('Parse error: '+e.message)}finally{unload()}}
+async function handleFile(file){
+ if(!file)return;
+ curFile=file;
+ const ext=(file.name.split('.').pop()||'').toLowerCase();
+
+ if(ext==='emb'){
+   D=null; OD=null;
+   document.getElementById('drop').style.display='none';
+   document.getElementById('fileName').textContent=file.name;
+   document.getElementById('fmtBox').textContent='EMB';
+   document.getElementById('fileMeta').textContent='Wilcom EMB detected • Use Automation Bridge';
+   document.getElementById('infoRows').innerHTML='<div class="row"><span>Format</span><b>Wilcom EMB</b></div><div class="row"><span>Mode</span><b>Automation Bridge</b></div><div class="row"><span>Next</span><b>Stage → Open Wilcom → Export</b></div>';
+   document.getElementById('analysisBox').innerHTML='EMB uses Wilcom Automation Bridge. Click <b>Wilcom Automation</b>.';
+   ['wilcomBtn'].forEach(id=>{let x=document.getElementById(id);if(x)x.disabled=false});
+   toast('EMB detected. Normal parser skipped. Use Wilcom Automation.');
+   await checkBridge();
+   return;
+ }
+
+ load('Parsing '+file.name+'...');
+ let fd=new FormData();fd.append('file',file);
+ try{
+   let r=await fetch(API+'/api/parse',{method:'POST',body:fd});
+   if(!r.ok){let e=await r.json().catch(()=>({}));throw new Error(e.error||'API '+r.status)}
+   D=await r.json();OD=JSON.parse(JSON.stringify(D));
+   document.getElementById('drop').style.display='none';
+   ['pdfBtn','saveBtn','resizeSaveBtn','wilcomBtn'].forEach(id=>{let x=document.getElementById(id);if(x)x.disabled=false});
+   updateUI();fitView();toast('Design loaded')
+ }catch(e){alert('Parse error: '+e.message)}
+ finally{unload()}
+}
 function updateUI(){if(!D)return;document.getElementById('fmtBox').textContent=D.format||'DST';document.getElementById('fileName').textContent=D.filename||curFile.name;document.getElementById('fileMeta').textContent=`${D.width_in}" × ${D.height_in}" • ${Number(D.stitch_count).toLocaleString()} stitches • ${D.color_count} colors`;document.getElementById('stitches').textContent=Number(D.stitch_count).toLocaleString();document.getElementById('dims').textContent=`${D.width_in}" × ${D.height_in}"`;document.getElementById('colors').textContent=D.color_count;document.getElementById('trims').textContent=D.trim_count;document.getElementById('thread').textContent='~'+D.thread_m+'m';document.getElementById('infoRows').innerHTML=`<div class="row"><span>Format</span><b>${D.format}</b></div><div class="row"><span>Size mm</span><b>${D.width_mm} × ${D.height_mm}</b></div><div class="row"><span>Jumps</span><b>${Number(D.jump_count).toLocaleString()}</b></div><div class="row"><span>Density</span><b>${D.density} st/cm²</b></div><div class="row"><span>Time</span><b>${D.time_min} min</b></div>`;document.getElementById('colorList').innerHTML=(D.colors||[]).map(c=>`<div class="color-item"><div class="sw" style="background:${c.color}"></div><div><b>${c.name||'Color '+(c.index+1)}</b><small>${Number(c.count||0).toLocaleString()} stitches</small></div></div>`).join('')||'No colors';updateScalePreview()}
 function resizeCanvas(){const r=viewer.getBoundingClientRect();canvas.width=r.width;canvas.height=r.height;render()} window.addEventListener('resize',resizeCanvas);setTimeout(resizeCanvas,100);
 function fitView(){if(!D){resizeCanvas();return}resizeCanvas();let b=D.bounds,w=(b.maxX-b.minX)||1,h=(b.maxY-b.minY)||1;zoom=Math.min(canvas.width*.76/w,canvas.height*.76/h);ox=0;oy=0;render()}
@@ -200,8 +230,88 @@ async function exportPDF(){if(!D)return;load('Generating production PDF...');try
 function downloadPNG(){if(!D)return;let a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download=(D.filename||'preview')+'.png';a.click()}
 async function analyzeFile(){if(!curFile)return;load('Analyzing design...');let fd=new FormData();fd.append('file',curFile);try{let r=await fetch(API+'/api/analyze',{method:'POST',body:fd});if(!r.ok){let e=await r.json().catch(()=>({}));throw new Error(e.error||'Server '+r.status)}let j=await r.json(),a=j.analysis||{};document.getElementById('analysisBox').innerHTML=`<b>Score: ${a.score}/100</b><br>Avg stitch: ${a.avg_stitch_length_mm}mm<br>Max density: ${a.max_density_st_cm2} st/cm²<br>Long stitches: ${a.long_stitches_count}<br>Micro stitches: ${a.micro_stitches_count}<br>${(a.warnings||[]).map(w=>'⚠ '+w).join('<br>')||'✅ No major issue found'}`;toast('Analyze complete')}catch(e){alert('Analyze error: '+e.message)}finally{unload()}}
 async function repairFile(){if(!curFile)return;let ext=(D?.format||curFile.name.split('.').pop()).toLowerCase();load('Repairing stitches...');let fd=new FormData();fd.append('file',curFile);fd.append('format',ext);fd.append('max_stitch_mm','6');fd.append('min_stitch_mm','0.2');try{let r=await fetch(API+'/api/repair',{method:'POST',body:fd});if(!r.ok){let e=await r.json().catch(()=>({}));throw new Error(e.error||'Server '+r.status)}let blob=await r.blob(),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=curFile.name.replace(/\.[^.]+$/,'')+'_repaired.'+ext;a.click();URL.revokeObjectURL(u);toast('Repair downloaded')}catch(e){alert('Repair error: '+e.message)}finally{unload()}}
-async function checkBridge(){let dot=document.getElementById('bridgeDot'),st=document.getElementById('bridgeStatus'),chip=document.getElementById('bridgeChip');try{let r=await fetch(WILCOM+'/health',{cache:'no-store'});let j=await r.json();dot.className='status-dot on';st.textContent=j.sffConverter?'Online / DLL found':'Online / DLL missing';chip.textContent='Bridge: online';document.getElementById('wilcomBtn').disabled=false;toast('Wilcom bridge online')}catch(e){dot.className='status-dot off';st.textContent='Offline';chip.textContent='Bridge: offline';toast('Wilcom bridge offline. Run Windows bridge first.')}}
-async function wilcomConvert(){if(!curFile)return;load('Sending to Wilcom Bridge...');let fd=new FormData();fd.append('file',curFile);try{let r=await fetch(WILCOM+'/convert-to-sff',{method:'POST',body:fd});if(!r.ok){let e=await r.json().catch(()=>({}));throw new Error(e.message||e.error||'Bridge error '+r.status)}let blob=await r.blob(),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=curFile.name.replace(/\.[^.]+$/,'')+'.sff';a.click();URL.revokeObjectURL(u);toast('Wilcom SFF downloaded')}catch(e){alert('Wilcom bridge error: '+e.message)}finally{unload()}}
+async function checkBridge(){
+ let dot=document.getElementById('bridgeDot'),st=document.getElementById('bridgeStatus'),chip=document.getElementById('bridgeChip');
+ try{
+   let r=await fetch(WILCOM+'/health',{cache:'no-store'});
+   let j=await r.json();
+   dot.className='status-dot on';
+   st.textContent=j.wilcom_exe_found?'Automation Online':'Online / Wilcom EXE missing';
+   chip.textContent='Bridge: automation online';
+   document.getElementById('wilcomBtn').disabled=false;
+   toast('Automation bridge online')
+ }catch(e){
+   dot.className='status-dot off';
+   st.textContent='Offline';
+   chip.textContent='Bridge: offline';
+   toast('Automation bridge offline. Run run_bridge.bat on port 7080.')
+ }
+}
+async function wilcomConvert(){
+ if(!curFile)return;
+ load('Staging file in Wilcom Automation Bridge...');
+ let fd=new FormData();fd.append('file',curFile);
+
+ try{
+   // 1. Stage file in automation bridge uploads folder
+   let stage=await fetch(WILCOM+'/stage-file',{method:'POST',body:fd});
+   if(!stage.ok){
+     let e=await stage.json().catch(()=>({}));
+     throw new Error(e.error||'Stage failed '+stage.status);
+   }
+   let sj=await stage.json();
+
+   // 2. Ask bridge to open file in Wilcom
+   load('Opening file in Wilcom...');
+   let open=await fetch(WILCOM+'/open-in-wilcom',{
+     method:'POST',
+     headers:{'Content-Type':'application/json'},
+     body:JSON.stringify({input_path:sj.input_path})
+   });
+   if(!open.ok){
+     let e=await open.json().catch(()=>({}));
+     throw new Error(e.error||'Open Wilcom failed '+open.status);
+   }
+
+   unload();
+   alert(
+     'File opened/staged in Wilcom.\n\n' +
+     'Now export/save from Wilcom into this folder:\n' +
+     'exports folder inside panda_wilcom_automation_bridge_v1\n\n' +
+     'After export, click OK then press Wilcom Automation again and choose Check Export.'
+   );
+
+   document.getElementById('analysisBox').innerHTML =
+     'File staged: <br><b>'+sj.input_path+'</b><br><br>' +
+     'Now export from Wilcom into bridge <b>exports</b> folder. Then click <b>Check Export</b>.';
+
+ }catch(e){
+   unload();
+   alert('Wilcom automation error: '+e.message);
+ }
+}
+
+async function checkWilcomExport(){
+ load('Checking exported file...');
+ try{
+   let r=await fetch(WILCOM+'/manual-export-done',{method:'POST'});
+   if(!r.ok){
+     let e=await r.json().catch(()=>({}));
+     throw new Error(e.message||e.error||'No export found');
+   }
+   let j=await r.json();
+   let fileUrl=WILCOM+j.download_url;
+   let a=document.createElement('a');
+   a.href=fileUrl;
+   a.download=j.latest_export;
+   a.click();
+   toast('Export found and download started');
+ }catch(e){
+   alert('Export check: '+e.message);
+ }finally{
+   unload();
+ }
+}
 </script>
 </body>
 </html>
