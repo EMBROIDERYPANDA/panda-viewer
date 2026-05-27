@@ -3,163 +3,265 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Panda Clean Live Viewer</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Panda Viewer - Glass Banner V7</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
- --bg:#f7f7fb;--glass:rgba(255,255,255,.74);--line:rgba(148,163,184,.24);
- --text:#141827;--muted:#6b7280;--p:#7c3aed;--shadow:0 18px 50px rgba(30,41,59,.09)
+  --text:#101827;--muted:#64748b;--line:rgba(120,90,180,.18);
+  --glass:rgba(255,255,255,.44);--glass2:rgba(255,255,255,.26);
+  --purple:#7c3aed;--violet:#a855f7;--orange:#ff7a18;--pink:#ec4899;--cyan:#06b6d4;
+  --shadow:0 18px 55px rgba(70,55,120,.12);
 }
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,Manrope,Arial,sans-serif;color:var(--text);background:
-radial-gradient(circle at 10% 0%,#efe6ff,transparent 30%),
-radial-gradient(circle at 95% 8%,#e6fbff,transparent 28%),
-linear-gradient(135deg,#fbfbff,#f1f4fb)}
-.app{min-height:100vh;display:grid;grid-template-columns:220px 1fr 360px;gap:16px;padding:16px}
-.glass{background:var(--glass);backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.58);box-shadow:var(--shadow);border-radius:26px}
-.sidebar{padding:20px}.brand{display:flex;gap:12px;align-items:center;margin-bottom:28px}.logo{width:48px;height:48px;border-radius:18px;background:#f0e8ff;display:grid;place-items:center;font-size:29px}.brand h1{font-size:17px;line-height:18px;margin:0;font-weight:700}.brand p{margin:4px 0 0;color:var(--muted);font-size:12px}
-.nav-title{font-size:11px;color:#9aa3b2;font-weight:700;letter-spacing:.08em;margin:20px 8px 8px}.nav button{width:100%;height:42px;border:0;background:transparent;border-radius:15px;text-align:left;padding:0 12px;font-weight:600;color:#1f2937;cursor:pointer}.nav button:hover,.nav .active{background:rgba(124,58,237,.10);color:var(--p)}
-.main{display:grid;grid-template-rows:64px auto;gap:16px}.top{display:flex;align-items:center;justify-content:space-between;padding:0 18px}.btn{height:42px;border:1px solid var(--line);background:rgba(255,255,255,.72);border-radius:15px;padding:0 16px;font-weight:600;cursor:pointer;color:#111827}.purple{background:linear-gradient(135deg,var(--p),#9d4edd)!important;color:white!important;border:0!important}.content{overflow:auto}.filebar{display:flex;justify-content:space-between;align-items:center;padding:16px;margin-bottom:16px}.file-left{display:flex;gap:13px;align-items:center}.badge{width:48px;height:48px;border-radius:17px;background:#f0e9ff;color:var(--p);display:grid;place-items:center;font-weight:700}.meta b{font-size:15px;font-weight:650}.meta span{display:block;color:var(--muted);font-size:12px;margin-top:4px}
-.viewer-card{padding:14px}.tabs{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}.tabs button{height:39px;border:1px solid var(--line);background:rgba(255,255,255,.64);border-radius:14px;padding:0 15px;font-weight:600;cursor:pointer}.tabs .active{background:linear-gradient(135deg,var(--p),#9d4edd);color:white;border:0}
-.canvas-wrap{height:430px;border-radius:22px;background:linear-gradient(135deg,#fff8ed,#faf4e8);border:1px solid #f4ddbd;position:relative;overflow:hidden}.canvas-wrap.dark{background:#101827}.canvas-wrap.map{background:#06111f}canvas,.live{width:100%;height:100%;display:block;object-fit:contain}.live{background:#0f172a;display:none}.drop{position:absolute;inset:0;display:grid;place-items:center}.dropbox{background:rgba(255,255,255,.84);border-radius:28px;padding:42px;text-align:center;box-shadow:0 22px 50px rgba(124,58,237,.14)}.dropbox h2{margin:8px 0;font-weight:650}.dropbox p{color:var(--muted);font-size:14px}
-.player{height:56px;display:flex;align-items:center;gap:14px}.play{width:42px;height:42px;border:0;border-radius:50%;background:linear-gradient(135deg,var(--p),#9d4edd);color:#fff}.track{height:6px;background:#ebe4ff;border-radius:999px;flex:1;overflow:hidden}.track div{height:100%;width:0%;background:linear-gradient(90deg,var(--p),#9d4edd)}
-.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:16px}.stat{padding:15px;display:flex;gap:12px;align-items:center}.stat i{font-style:normal;width:35px;height:35px;border-radius:13px;background:rgba(124,58,237,.10);display:grid;place-items:center}.stat span{font-size:11px;color:var(--muted);display:block}.stat b{font-size:16px;font-weight:650}
-.right{overflow:auto}.panel{padding:18px;margin-bottom:14px}.panel h3{margin:0 0 13px;font-weight:650;font-size:16px}.input{height:43px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.74);padding:0 12px;width:100%;font-weight:600}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.status{display:inline-block;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:700;background:#e2e8f0}.on{background:#dcfce7;color:#166534}.off{background:#fee2e2;color:#991b1b}.row{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:8px 0;font-size:13px}.row span{color:var(--muted)}
-.exports{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.exports button{height:45px;border-radius:16px;border:0;color:white;font-weight:650}.lux{background:linear-gradient(135deg,var(--p),#9d4edd)}.ex{background:linear-gradient(135deg,#22c55e,#16a34a)}.pdf{background:linear-gradient(135deg,#f59e0b,#ea580c)}.muted{color:var(--muted);font-size:12px;line-height:1.45}.log{background:#0f172a;color:#dbeafe;border-radius:18px;padding:13px;white-space:pre-wrap;font-family:Consolas,monospace;font-size:12px;max-height:160px;overflow:auto}.downloads a{display:block;margin:8px 0;padding:11px 12px;border-radius:15px;background:rgba(124,58,237,.10);color:var(--p);font-weight:650;text-decoration:none}
-@media(max-width:1150px){.app{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
+html,body{width:100%;height:100%;margin:0;overflow:hidden}
+body{
+  font-family:Inter,Arial,sans-serif;color:var(--text);
+  background:
+    radial-gradient(circle at 12% 10%,rgba(124,58,237,.22),transparent 24%),
+    radial-gradient(circle at 90% 12%,rgba(255,122,24,.18),transparent 22%),
+    linear-gradient(120deg,#fff7ed,#f7efff,#ecfeff,#fff1f2);
+  background-size:280% 280%;
+  animation:bgMove 16s ease infinite;
+}
+@keyframes bgMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+button,input{font-family:inherit}
+.app{
+  height:100vh;
+  padding:12px;
+  display:grid;
+  grid-template-columns:260px minmax(0,1fr) 340px;
+  gap:12px;
+}
+.glass{
+  background:linear-gradient(180deg,var(--glass),var(--glass2));
+  border:1px solid rgba(255,255,255,.62);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(28px) saturate(145%);
+  -webkit-backdrop-filter:blur(28px) saturate(145%);
+  border-radius:24px;
+}
+.left{display:flex;flex-direction:column;gap:10px;min-height:0}
+.brand{padding:13px 14px;display:flex;gap:11px;align-items:center;min-height:78px}
+.logo{width:48px;height:48px;border-radius:18px;background:rgba(255,255,255,.46);display:grid;place-items:center;font-size:30px;box-shadow:inset 0 0 20px rgba(124,58,237,.12)}
+.brand b{font-size:17px}.brand span{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.big-open{
+  width:100%;height:50px;border:0;border-radius:18px;color:white;font-weight:800;cursor:pointer;
+  background:linear-gradient(135deg,var(--purple),var(--violet));
+  box-shadow:0 12px 24px rgba(124,58,237,.22)
+}
+.upload-card{padding:12px}
+.banner{
+  position:relative;overflow:hidden;padding:14px;border-radius:22px;
+  min-height:112px;color:#fff;border:1px solid rgba(255,255,255,.32);
+  box-shadow:0 18px 38px rgba(80,40,150,.18)
+}
+.banner:before{content:"";position:absolute;inset:-40%;background:radial-gradient(circle,rgba(255,255,255,.35),transparent 35%);animation:shine 6s linear infinite}
+@keyframes shine{0%{transform:translateX(-25%) rotate(0)}100%{transform:translateX(25%) rotate(360deg)}}
+.banner>*{position:relative;z-index:1}
+.offer{background:linear-gradient(135deg,#ff7a18,#ec4899,#7c3aed)}
+.store{background:linear-gradient(135deg,#06b6d4,#7c3aed,#a855f7)}
+.banner small{display:block;opacity:.85;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.banner h3{margin:6px 0 6px;font-size:18px;line-height:1.1}
+.banner p{margin:0;font-size:12px;opacity:.92;line-height:1.35}
+.banner button{margin-top:10px;height:32px;border:0;border-radius:12px;background:rgba(255,255,255,.22);color:#fff;font-weight:800;padding:0 12px}
+.status-card,.downloads-card,.log-card{padding:13px}
+.card-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.card-title h3{margin:0;font-size:15px}
+.badge{padding:5px 10px;border-radius:999px;background:rgba(34,197,94,.14);color:#15803d;font-size:12px;font-weight:800}
+.row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid rgba(80,70,120,.10);padding:7px 0;font-size:12.5px}
+.row span{color:var(--muted)}.row b{max-width:130px;text-align:right;overflow:hidden;text-overflow:ellipsis}
+.downloads-card{flex:1;min-height:0;overflow:auto}
+.log-card{max-height:125px;overflow:hidden}
+.download-card{display:grid;grid-template-columns:38px minmax(0,1fr) 38px;align-items:center;gap:9px;padding:9px;border-radius:15px;background:rgba(255,255,255,.50);border:1px solid rgba(124,58,237,.10);margin-top:7px}
+.dico{width:36px;height:36px;border-radius:13px;background:rgba(124,58,237,.13);display:grid;place-items:center;color:var(--purple);font-weight:800;font-size:11px}
+.download-card b{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.download-card span{color:var(--muted);font-size:11px}
+.download-card a{width:36px;height:36px;border-radius:13px;background:linear-gradient(135deg,var(--orange),var(--purple));display:grid;place-items:center;color:#fff;text-decoration:none;font-weight:900}
+.log{background:rgba(17,24,39,.92);color:#dbeafe;border-radius:16px;padding:10px;white-space:pre-wrap;font-family:Consolas,monospace;font-size:11px;max-height:86px;overflow:auto}
+.help{color:var(--muted);font-size:12px;line-height:1.35}
+.main{display:grid;grid-template-rows:78px minmax(0,1fr) 82px;gap:12px;min-width:0;min-height:0}
+.filebar{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.file-info{min-width:0}.file-info h1{margin:0 0 6px;font-size:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meta{display:flex;gap:13px;flex-wrap:wrap;color:var(--muted);font-size:13px}.type-pill{padding:4px 10px;border-radius:999px;background:rgba(124,58,237,.12);color:var(--purple);font-weight:800}
+.file-actions{display:flex;gap:9px}
+.btn{height:40px;border:1px solid var(--line);background:rgba(255,255,255,.52);border-radius:15px;padding:0 14px;font-weight:700;cursor:pointer;color:var(--text)}
+.btn.primary{background:linear-gradient(135deg,var(--purple),var(--violet));color:white;border:0}
+.viewer{padding:12px;display:grid;grid-template-rows:auto minmax(0,1fr) 54px;min-height:0}
+.tabs{display:flex;gap:6px;margin-bottom:10px;overflow:auto;padding-bottom:2px}
+.tabs button{height:38px;min-width:max-content;border:1px solid var(--line);background:rgba(255,255,255,.52);border-radius:14px;padding:0 14px;font-weight:700;cursor:pointer;color:#374151}
+.tabs button.active{background:linear-gradient(135deg,var(--purple),var(--violet));color:#fff;border:0}
+.canvas-wrap{position:relative;overflow:hidden;border-radius:22px;background:linear-gradient(rgba(124,58,237,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,.04) 1px,transparent 1px),rgba(255,255,255,.42);background-size:26px 26px;border:1px solid rgba(124,58,237,.12);min-height:0}
+canvas,.live{width:100%;height:100%;display:block;object-fit:contain}.live{display:none;background:#0f172a}
+.drop{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(circle at center,rgba(124,58,237,.10),transparent 50%)}
+.dropbox{text-align:center;padding:30px 38px;border-radius:26px;background:rgba(255,255,255,.58);border:1px dashed rgba(124,58,237,.35);backdrop-filter:blur(20px)}
+.dropbox .big{font-size:46px}.dropbox h2{margin:8px 0 5px;font-size:24px}.dropbox p{margin:0 0 14px;color:var(--muted)}
+.player{height:52px;margin-top:10px;border-radius:20px;background:rgba(255,255,255,.42);border:1px solid rgba(124,58,237,.10);display:flex;align-items:center;gap:12px;padding:0 14px}
+.play{width:38px;height:38px;border:0;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--purple));color:white}
+.track{height:6px;background:rgba(124,58,237,.12);border-radius:999px;flex:1;overflow:hidden}.track div{height:100%;width:0%;background:linear-gradient(90deg,var(--orange),var(--purple))}
+.counter{color:var(--muted);font-size:12px;min-width:100px;text-align:right}
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.stat{padding:11px;display:flex;gap:9px;align-items:center}
+.sico{width:34px;height:34px;border-radius:13px;background:rgba(124,58,237,.11);display:grid;place-items:center}
+.stat span{display:block;font-size:10px;color:var(--muted)}.stat b{font-size:14px;display:block;margin-top:2px}
+.right{display:flex;flex-direction:column;gap:10px;min-height:0}
+.panel{padding:14px}.panel h3{margin:0 0 12px;font-size:16px}
+.engine-sub{color:var(--muted);font-size:12px;margin-top:3px}
+.engine-bar{height:7px;background:rgba(124,58,237,.12);border-radius:999px;overflow:hidden;margin:12px 0}.engine-bar div{height:100%;width:100%;background:linear-gradient(90deg,var(--orange),var(--pink),var(--purple))}
+.input-row{display:grid;grid-template-columns:1fr 1fr 42px;gap:8px}.input{height:43px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.55);padding:0 11px;font-weight:700;outline:none;color:var(--text)}
+.lockbox{height:43px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.55);display:grid;place-items:center}
+.wide{width:100%;height:46px;border:0;border-radius:16px;color:white;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--orange),var(--purple));box-shadow:0 14px 28px rgba(124,58,237,.16)}
+.exports{display:grid;grid-template-columns:1fr 1fr;gap:8px}.exports button{height:42px;border-radius:15px;border:0;color:white;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--purple),var(--violet))}.exports button.hot{background:linear-gradient(135deg,var(--orange),var(--purple))}
+.cal{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.cal button{height:36px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.55);font-weight:700;color:var(--text)}
+@media(max-width:1280px){
+  html,body{overflow:auto;height:auto}
+  .app{height:auto;min-height:100vh;grid-template-columns:240px minmax(0,1fr);overflow:visible}
+  .right{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr)}
+  .main{min-height:760px}.stats{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:900px){
+  .app{display:flex;flex-direction:column;padding:10px;gap:10px}
+  .left{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .brand,.upload-card,.status-card,.downloads-card,.log-card{padding:12px}
+  .status-card,.downloads-card,.log-card{min-height:auto}
+  .main{display:flex;flex-direction:column;min-height:auto}
+  .viewer{height:70vh;min-height:520px}.canvas-wrap{min-height:0}
+  .right{display:flex}
+  .filebar{flex-direction:column;align-items:stretch}.file-actions{width:100%}.file-actions .btn{flex:1}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:560px){
+  .left{display:flex}.brand{min-height:auto}.logo{width:44px;height:44px;font-size:27px}
+  .viewer{height:62vh;min-height:460px}.tabs button{height:38px;padding:0 12px}
+  .stats{grid-template-columns:1fr 1fr}.input-row{grid-template-columns:1fr}.exports{grid-template-columns:1fr 1fr}.cal{grid-template-columns:1fr}
+}
+
+/* === V8 COMPACT 100% DESKTOP FIT PATCH === */
+@media (min-width: 1281px){
+  html,body{width:100vw;height:100vh;overflow:hidden!important}
+  .app{
+    height:100vh!important;
+    padding:7px!important;
+    gap:7px!important;
+    grid-template-columns:220px minmax(0,1fr) 300px!important;
+  }
+  .glass{border-radius:18px!important}
+  .left{gap:7px!important;min-height:0!important;overflow:hidden!important}
+  .brand{min-height:58px!important;padding:9px 10px!important;border-radius:18px!important}
+  .logo{width:42px!important;height:42px!important;border-radius:15px!important;font-size:26px!important}
+  .brand b{font-size:14px!important}
+  .brand span{font-size:10px!important}
+  .upload-card{padding:8px!important;border-radius:18px!important}
+  .big-open{height:42px!important;border-radius:15px!important;font-size:13px!important}
+  .banner{min-height:82px!important;padding:10px!important;border-radius:17px!important}
+  .banner small{font-size:9px!important}
+  .banner h3{font-size:14px!important;margin:3px 0!important}
+  .banner p{font-size:10px!important;line-height:1.22!important}
+  .banner button{height:25px!important;border-radius:10px!important;font-size:10px!important;margin-top:5px!important}
+  .status-card,.downloads-card,.log-card{padding:10px!important;border-radius:18px!important}
+  .card-title{margin-bottom:5px!important}
+  .card-title h3{font-size:13px!important}
+  .badge{padding:4px 8px!important;font-size:10px!important}
+  .row{padding:5px 0!important;font-size:11px!important}
+  .downloads-card{flex:0 1 115px!important;overflow:auto!important}
+  .log-card{height:78px!important;max-height:78px!important}
+  .log{max-height:42px!important;font-size:10px!important;padding:8px!important;border-radius:12px!important}
+  .download-card{grid-template-columns:32px minmax(0,1fr) 32px!important;padding:7px!important;border-radius:12px!important;margin-top:5px!important}
+  .dico,.download-card a{width:30px!important;height:30px!important;border-radius:10px!important;font-size:9px!important}
+  .download-card b{font-size:10px!important}.download-card span{font-size:9px!important}
+  .main{
+    height:calc(100vh - 14px)!important;
+    grid-template-rows:62px minmax(0,1fr) 64px!important;
+    gap:7px!important;
+    overflow:hidden!important;
+  }
+  .filebar{padding:8px 12px!important;border-radius:18px!important}
+  .file-info h1{font-size:15px!important;margin-bottom:4px!important}
+  .meta{gap:9px!important;font-size:11px!important}
+  .type-pill{padding:3px 8px!important;font-size:11px!important}
+  .file-actions{gap:7px!important}
+  .btn{height:34px!important;border-radius:13px!important;padding:0 12px!important;font-size:12px!important}
+  .viewer{
+    min-height:0!important;
+    height:100%!important;
+    padding:9px!important;
+    border-radius:18px!important;
+    grid-template-rows:38px minmax(0,1fr) 43px!important;
+  }
+  .tabs{gap:5px!important;margin-bottom:7px!important;padding-bottom:0!important}
+  .tabs button{height:33px!important;border-radius:12px!important;padding:0 10px!important;font-size:12px!important}
+  .canvas-wrap{min-height:0!important;border-radius:17px!important}
+  .dropbox{padding:22px 30px!important;border-radius:20px!important}
+  .dropbox .big{font-size:36px!important}
+  .dropbox h2{font-size:18px!important;margin:5px 0!important}
+  .dropbox p{font-size:12px!important;margin-bottom:10px!important}
+  .player{height:39px!important;margin-top:6px!important;border-radius:15px!important;padding:0 10px!important;gap:9px!important}
+  .play{width:32px!important;height:32px!important}
+  .counter{font-size:11px!important;min-width:72px!important}
+  .stats{height:64px!important;gap:7px!important}
+  .stat{padding:8px!important;border-radius:16px!important}
+  .sico{width:29px!important;height:29px!important;border-radius:11px!important;font-size:14px!important}
+  .stat span{font-size:9px!important}
+  .stat b{font-size:12px!important}
+  .right{height:calc(100vh - 14px)!important;gap:7px!important;overflow:hidden!important}
+  .panel{padding:10px!important;border-radius:18px!important}
+  .panel h3{font-size:13px!important;margin-bottom:8px!important}
+  .engine-sub,.help{font-size:10px!important;line-height:1.25!important;margin:6px 0 8px!important}
+  .engine-bar{height:5px!important;margin:8px 0!important}
+  .wide{height:39px!important;border-radius:14px!important;font-size:12px!important}
+  .input-row{grid-template-columns:1fr 1fr 36px!important;gap:6px!important}
+  .input,.lockbox{height:36px!important;border-radius:12px!important;font-size:11px!important}
+  label{font-size:11px!important}
+  .exports{gap:6px!important}
+  .exports button{height:36px!important;border-radius:12px!important;font-size:12px!important}
+  .cal{gap:5px!important}
+  .cal button{height:31px!important;border-radius:11px!important;font-size:11px!important}
+}
+
 </style>
 </head>
 <body>
 <input id="fileInput" type="file" accept=".dst,.pes,.jef,.vp3,.hus,.exp,.xxx,.emb" style="display:none">
 <div class="app">
-<aside class="sidebar glass">
-  <div class="brand"><div class="logo">🐼</div><div><h1>Panda Viewer</h1><p>Embroidery preview</p></div></div>
-  <div class="nav">
-    <button class="active" onclick="fileInput.click()">Open File</button>
-    <button onclick="showTab('panda',this)">Panda Preview</button>
-    <button onclick="showTab('live',this)">Live Wilcom</button>
-    <div class="nav-title">VIEW MODES</div>
-    <button onclick="setMode('true')">TrueView</button>
-    <button onclick="setMode('2d')">2D View</button>
-    <button onclick="setMode('3d')">3D View</button>
-    <button onclick="setMode('map')">Stitch Map</button>
-    <button onclick="toggleSim()">Simulator</button>
-    <div class="nav-title">OUTPUT</div>
-    <button onclick="downloadPNG()">PNG Preview</button>
-    <button onclick="downloadCurrent()">Download Original</button>
-  </div>
-</aside>
+  <aside class="left">
+    <section class="brand glass"><div class="logo">🐼</div><div><b>Panda Viewer</b><span>Embroidery workstation</span></div></section>
+    <section class="upload-card glass"><button class="big-open" onclick="fileInput.click()">＋ Open Embroidery File</button></section>
+    <section class="banner offer"><small>Limited Offer</small><h3>50% OFF Digitizing</h3><p>Fast embroidery digitizing, clean stitches, production-ready files.</p><button>Order Now</button></section>
+    <section class="banner store"><small>File Store</small><h3>Panda Design Store</h3><p>Buy ready embroidery files with instant preview and format export.</p><button>Explore</button></section>
+    <section class="status-card glass"><div class="card-title"><h3>Panda Engine</h3><span class="badge" id="workerStatus">Checking</span></div><div class="row"><span>Active File</span><b id="activeFile">Idle</b></div><div class="row"><span>Queue</span><b id="queue">—</b></div><div class="row"><span>Live Stream</span><b id="liveStatus">—</b></div></section>
+    <section class="downloads-card glass"><div class="card-title"><h3>Downloads</h3></div><div id="downloads"><div class="help">No exports yet.</div></div></section>
+    <section class="log-card glass"><div class="card-title"><h3>Job Log</h3></div><div id="log" class="log">Ready.</div></section>
+  </aside>
 
-<main class="main">
-  <div class="top glass">
-    <button class="btn" onclick="fileInput.click()">Open File</button>
-    <div style="display:flex;gap:10px"><button class="btn" onclick="showTab('panda')">Panda Preview</button><button class="btn purple" onclick="showTab('live')">Live Wilcom</button></div>
-  </div>
+  <main class="main">
+    <section class="filebar glass"><div class="file-info"><h1 id="fileName">No file loaded</h1><div class="meta"><span class="type-pill" id="typeBadge">DST</span><span id="stitchMeta">Stitches: —</span><span id="sizeMeta">Size: —</span><span id="colorMeta">Colors: —</span></div></div><div class="file-actions"><button class="btn" onclick="downloadCurrent()">Download Original</button><button class="btn primary" onclick="fileInput.click()">Open File</button></div></section>
+    <section class="viewer glass"><div class="tabs"><button class="active mainTab" onclick="showTab('panda',this)">Panda Preview</button><button class="mainTab" onclick="showTab('live',this)">Live Wilcom</button><button onclick="setMode('true',this)">TrueView</button><button onclick="setMode('2d',this)">2D</button><button onclick="setMode('3d',this)">3D</button><button onclick="setMode('map',this)">Map</button><button onclick="toggleSim(this)">Simulator</button></div><div class="canvas-wrap" id="canvasWrap"><canvas id="canvas"></canvas><img class="live" id="liveImg"><div class="drop" id="drop"><div class="dropbox"><div class="big">🧵</div><h2>Upload Embroidery File</h2><p>Preview with Render, or open live Wilcom.</p><button class="btn primary" onclick="fileInput.click()">Choose File</button></div></div></div><div class="player"><button class="play" onclick="toggleSim()">▶</button><div class="track"><div id="prog"></div></div><div class="counter" id="counter">0 / 0</div><button class="btn">1.0x</button></div></section>
+    <section class="stats"><div class="stat glass"><div class="sico">🪡</div><div><span>Stitches</span><b id="stitches">—</b></div></div><div class="stat glass"><div class="sico">↔</div><div><span>Size</span><b id="dims">—</b></div></div><div class="stat glass"><div class="sico">🎨</div><div><span>Colors</span><b id="colors">—</b></div></div><div class="stat glass"><div class="sico">⛔</div><div><span>Stops</span><b id="trims">—</b></div></div><div class="stat glass"><div class="sico">⏱</div><div><span>Time</span><b id="time">—</b></div></div><div class="stat glass"><div class="sico">▣</div><div><span>Format</span><b id="fmt">—</b></div></div></section>
+  </main>
 
-  <div class="content">
-    <div class="filebar glass">
-      <div class="file-left"><div class="badge" id="typeBadge">DST</div><div class="meta"><b id="fileName">No file loaded</b><span id="fileMeta">Upload DST, PES, JEF, EMB</span></div></div>
-      <div><button class="btn" onclick="fileInput.click()">Choose</button> <button class="btn purple" onclick="downloadCurrent()">Download</button></div>
-    </div>
-
-    <div class="viewer-card glass">
-      <div class="tabs">
-        <button class="active mainTab" onclick="showTab('panda',this)">Panda Preview</button>
-        <button class="mainTab" onclick="showTab('live',this)">Live Wilcom</button>
-        <button onclick="setMode('true',this)">TrueView</button>
-        <button onclick="setMode('2d',this)">2D</button>
-        <button onclick="setMode('3d',this)">3D</button>
-        <button onclick="setMode('map',this)">Map</button>
-        <button onclick="toggleSim(this)">Simulator</button>
-      </div>
-      <div class="canvas-wrap" id="canvasWrap"><canvas id="canvas"></canvas><img class="live" id="liveImg"><div class="drop" id="drop"><div class="dropbox"><div style="font-size:54px">🧵</div><h2>Upload Embroidery File</h2><p>Normal preview first. Open in Wilcom for live screen.</p><button class="btn purple" onclick="fileInput.click()">Choose File</button></div></div></div>
-      <div class="player"><button class="play" onclick="toggleSim()">▶</button><div class="track"><div id="prog"></div></div><b id="counter">0 / 0</b><button class="btn">1.0x</button></div>
-    </div>
-
-    <div class="stats">
-      <div class="stat glass"><i>🪡</i><div><span>Stitches</span><b id="stitches">—</b></div></div>
-      <div class="stat glass"><i>↔</i><div><span>Size</span><b id="dims">—</b></div></div>
-      <div class="stat glass"><i>🎨</i><div><span>Colors</span><b id="colors">—</b></div></div>
-      <div class="stat glass"><i>⛔</i><div><span>Stops</span><b id="trims">—</b></div></div>
-      <div class="stat glass"><i>⏱</i><div><span>Time</span><b id="time">—</b></div></div>
-      <div class="stat glass"><i>💾</i><div><span>Format</span><b id="fmt">—</b></div></div>
-    </div>
-  </div>
-</main>
-
-<aside class="right">
-  <div class="panel glass">
-    <h3>Resize in Wilcom</h3>
-    <div class="grid2"><input class="input" id="widthIn" placeholder="Width inch"><input class="input" id="heightIn" placeholder="Auto" disabled></div>
-    <label style="display:block;margin:12px 0"><input id="lockProp" type="checkbox" checked onchange="toggleLockUI()"> Proportional lock</label>
-    <p class="muted" id="lockHelp">Lock ON: enter width only. Height auto adjusts inside Wilcom.</p>
-    <button class="btn purple" style="width:100%" onclick="wilcomResizeOnly()">Apply Size</button>
-  </div>
-
-  <div class="panel glass">
-    <h3>Wilcom Engine</h3>
-    <div class="row"><span>Worker</span><b id="workerStatus" class="status">checking</b></div>
-    <div class="row"><span>Queue</span><b id="queue">—</b></div>
-    <div class="row"><span>Active File</span><b id="activeFile">—</b></div>
-    <div class="row"><span>Live Stream</span><b id="liveStatus">—</b></div>
-    <button class="btn purple" style="width:100%;margin-top:10px" onclick="sendOpen()">Open Current File</button>
-    <div class="exports">
-      <button class="ex" onclick="wilcomExport('dst')">DST</button>
-      <button class="ex" onclick="wilcomExport('pes')">PES</button>
-      <button class="ex" onclick="wilcomExport('jef')">JEF</button>
-      <button class="pdf" onclick="wilcomExport('pdf')">PDF</button>
-    </div>
-    <button class="btn" style="width:100%;margin-top:10px" onclick="previewWilcomOutput()">Preview Last Output</button>
-  </div>
-
-  <div class="panel glass">
-    <h3>Calibration</h3>
-    <p class="muted">Click button, then move cursor to the field/icon. It saves after 7 seconds.</p>
-    <div class="exports"><button class="lux" onclick="calW()">Width</button><button class="lux" onclick="calH()">Height</button><button class="lux" onclick="calLock()">Lock</button></div>
-  </div>
-
-  <div class="panel glass">
-    <h3>Job / Downloads</h3>
-    <div id="log" class="log">Ready.</div>
-    <div id="downloads" class="downloads"></div>
-  </div>
-</aside>
+  <aside class="right">
+    <section class="panel glass"><h3>Panda Embroidery Engine</h3><div class="engine-sub">Wilcom resize, export and live preview</div><div class="engine-bar"><div></div></div><button class="wide" onclick="sendOpen()">Open Current File in Wilcom</button></section>
+    <section class="panel glass"><h3>Resize Design</h3><div class="input-row"><input class="input" id="widthIn" placeholder="Width inch"><input class="input" id="heightIn" placeholder="Auto" disabled><div class="lockbox" id="lockIcon">🔒</div></div><label style="display:block;margin:10px 0"><input id="lockProp" type="checkbox" checked onchange="toggleLockUI()"> Keep proportions</label><div class="help" id="lockHelp">Lock ON: width only. Height auto adjusts.</div><button class="wide" onclick="wilcomResizeOnly()">Resize & Recalculate</button></section>
+    <section class="panel glass"><h3>Export Formats</h3><div class="exports"><button onclick="wilcomExport('dst')">DST</button><button onclick="wilcomExport('pes')">PES</button><button onclick="wilcomExport('jef')">JEF</button><button class="hot" onclick="wilcomExport('pdf')">PDF</button></div></section>
+    <section class="panel glass"><h3>Calibration</h3><div class="help">Click, move mouse to Wilcom field/icon. Saves after 7 seconds.</div><div class="cal"><button onclick="calW()">Width</button><button onclick="calH()">Height</button><button onclick="calLock()">Lock</button></div></section>
+  </aside>
 </div>
 
 <script>
-const RENDER_API="https://panda-viewer.onrender.com",WORKER="http://localhost:7090";
-let currentFile=null,currentData=null,lastOutput=null,currentJob=null,poller=null,mode='true',sim=false,simStep=0,simTimer=null;
-const ctx=canvas.getContext('2d'),log=x=>document.getElementById('log').textContent=typeof x==='string'?x:JSON.stringify(x,null,2);
-
-fileInput.onchange=()=>handleFile(fileInput.files[0]);
-function toggleLockUI(){heightIn.disabled=lockProp.checked;heightIn.placeholder=lockProp.checked?'Auto':'Height inch';lockHelp.textContent=lockProp.checked?'Lock ON: enter width only. Height auto adjusts inside Wilcom.':'Lock OFF: enter width and height. Calibrate lock + height first.'}
-toggleLockUI();
-
-async function checkWorker(){try{let r=await fetch(WORKER+'/health'),j=await r.json();workerStatus.textContent=j.ok?'online':'offline';workerStatus.className='status '+(j.ok?'on':'off');queue.textContent=j.queue;activeFile.textContent=j.active_file||'—';liveStatus.textContent=j.live_available?'ready':'missing packages'}catch(e){workerStatus.textContent='offline';workerStatus.className='status off'}}
+const RENDER_API="https://panda-viewer.onrender.com",WORKER="http://localhost:7090";let currentFile=null,currentData=null,lastOutput=null,currentJob=null,poller=null,mode='true',sim=false,simStep=0,simTimer=null;const ctx=canvas.getContext('2d'),log=x=>document.getElementById('log').textContent=typeof x==='string'?x:JSON.stringify(x,null,2);fileInput.onchange=()=>handleFile(fileInput.files[0]);
+function toggleLockUI(){heightIn.disabled=lockProp.checked;heightIn.placeholder=lockProp.checked?'Auto':'Height inch';lockIcon.textContent=lockProp.checked?'🔒':'🔓';lockHelp.textContent=lockProp.checked?'Lock ON: width only. Height auto adjusts.':'Lock OFF: width + height. Calibrate lock + height first.'}toggleLockUI();
+async function checkWorker(){try{let r=await fetch(WORKER+'/health'),j=await r.json();workerStatus.textContent=j.ok?'Online':'Offline';queue.textContent=j.queue;activeFile.textContent=j.active_file||'Idle';liveStatus.textContent=j.live_available?'Ready':'Missing'}catch(e){workerStatus.textContent='Offline'}}
 setInterval(checkWorker,5000);checkWorker();
-
 function showTab(t,btn){document.querySelectorAll('.mainTab').forEach(b=>b.classList.remove('active'));if(btn&&btn.classList.contains('mainTab'))btn.classList.add('active');if(t==='live'){canvas.style.display='none';liveImg.style.display='block';drop.style.display='none';if(!liveImg.src)liveImg.src=WORKER+'/live?t='+Date.now()}else{canvas.style.display='block';liveImg.style.display='none';if(!currentData&&!currentFile)drop.style.display='grid';render()}}
-async function handleFile(f){if(!f)return;currentFile=f;let ext=f.name.split('.').pop().toUpperCase();fileName.textContent=f.name;typeBadge.textContent=ext;fmt.textContent=ext;drop.style.display='none';downloads.innerHTML='';showTab('panda');if(ext==='EMB'){log('EMB loaded. Click Open Current File, then export DST/PES/JEF/PDF.');return}let fd=new FormData();fd.append('file',f);log('Parsing with Render API...');try{let r=await fetch(RENDER_API+'/api/parse',{method:'POST',body:fd});if(!r.ok)throw Error('parse failed');currentData=await r.json();updateInfo(currentData);render();log('Preview loaded.')}catch(e){log('Preview failed. Wilcom tools still available. '+e.message)}}
-function updateInfo(d){stitches.textContent=Number(d.stitch_count||0).toLocaleString();dims.textContent=(d.width_in||'—')+'" × '+(d.height_in||'—')+'"';fileMeta.textContent=(d.width_in||'—')+'" × '+(d.height_in||'—')+'" • '+Number(d.stitch_count||0).toLocaleString()+' stitches';colors.textContent=d.color_count||'—';trims.textContent=d.trim_count||'—';time.textContent=(d.time_min||'—')+'m';counter.textContent=(sim?simStep:0)+' / '+(d.stitch_count||0)}
+async function handleFile(f){if(!f)return;currentFile=f;let ext=f.name.split('.').pop().toUpperCase();fileName.textContent=f.name;typeBadge.textContent=ext;fmt.textContent=ext;downloads.innerHTML='<div class="help">No exports yet.</div>';drop.style.display='none';showTab('panda');if(ext==='EMB'){log('EMB loaded. Click Open Current File in Wilcom, then export DST/PES/JEF/PDF.');return}let fd=new FormData();fd.append('file',f);log('Parsing with Render API...');try{let r=await fetch(RENDER_API+'/api/parse',{method:'POST',body:fd});if(!r.ok)throw Error('parse failed');currentData=await r.json();updateInfo(currentData);render();log('Preview loaded.')}catch(e){log('Preview failed. Wilcom tools still available. '+e.message)}}
+function updateInfo(d){let st=Number(d.stitch_count||0).toLocaleString();stitches.textContent=st;dims.textContent=(d.width_in||'—')+'" × '+(d.height_in||'—')+'"';colors.textContent=d.color_count||'—';trims.textContent=d.trim_count||'—';time.textContent=(d.time_min||'—')+'m';stitchMeta.textContent='Stitches: '+st;sizeMeta.textContent='Size: '+(d.width_in||'—')+'" × '+(d.height_in||'—')+'"';colorMeta.textContent='Colors: '+(d.color_count||'—');counter.textContent=(sim?simStep:0)+' / '+(d.stitch_count||0)}
 function sizeCanvas(){let r=canvas.parentElement.getBoundingClientRect();canvas.width=r.width;canvas.height=r.height;render()}window.onresize=sizeCanvas;setTimeout(sizeCanvas,200);
-function render(){let d=currentData;if(canvas.style.display==='none')return;ctx.clearRect(0,0,canvas.width,canvas.height);if(!d)return;canvasWrap.className='canvas-wrap '+(mode==='map'?'map':mode==='2d'?'dark':'');let b=d.bounds||{minX:0,minY:0,maxX:100,maxY:100},w=b.maxX-b.minX||1,h=b.maxY-b.minY||1,z=Math.min(canvas.width*.78/w,canvas.height*.78/h);ctx.save();ctx.translate(canvas.width/2,canvas.height/2);ctx.scale(z,z);ctx.translate(-(b.minX+b.maxX)/2,-(b.minY+b.maxY)/2);let max=sim?simStep:1e12,drawn=0;(d.colors||[]).forEach(c=>{let pts=c.points||[];ctx.strokeStyle=mode==='map'?'rgba(255,180,0,.75)':(mode==='2d'?'#e8eefc':c.color||'#111');ctx.lineWidth=(mode==='3d'||mode==='true'?2.4:1.3)/z;ctx.lineCap='round';ctx.lineJoin='round';if(mode==='3d'||mode==='true'){ctx.shadowColor='rgba(0,0,0,.28)';ctx.shadowBlur=3/z;ctx.shadowOffsetX=1.5/z;ctx.shadowOffsetY=1.5/z}else ctx.shadowBlur=0;ctx.beginPath();let up=true;for(let p of pts){if(drawn++>max)break;if(p[2]!==0||up){ctx.moveTo(p[0],p[1]);up=false}else ctx.lineTo(p[0],p[1])}ctx.stroke()});ctx.restore();prog.style.width=currentData?Math.min(100,(simStep/(currentData.stitch_count||1))*100)+'%':'0%';counter.textContent=(sim?Math.min(simStep,currentData.stitch_count||0):0)+' / '+(currentData.stitch_count||0)}
-function setMode(m,btn){mode=m;document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');showTab('panda');sim=false;clearInterval(simTimer);render()}
-function toggleSim(){if(!currentData)return;showTab('panda');sim=!sim;if(sim){simStep=0;simTimer=setInterval(()=>{simStep+=Math.max(50,Math.floor((currentData.stitch_count||1000)/80));if(simStep>=(currentData.stitch_count||0)){sim=false;clearInterval(simTimer)}render()},70)}else clearInterval(simTimer)}
-function downloadPNG(){let a=document.createElement('a');a.href=canvas.toDataURL();a.download='panda-preview.png';a.click()}
+function render(){let d=currentData;if(canvas.style.display==='none')return;ctx.clearRect(0,0,canvas.width,canvas.height);if(!d)return;let b=d.bounds||{minX:0,minY:0,maxX:100,maxY:100},w=b.maxX-b.minX||1,h=b.maxY-b.minY||1,z=Math.min(canvas.width*.78/w,canvas.height*.78/h);ctx.save();ctx.translate(canvas.width/2,canvas.height/2);ctx.scale(z,z);ctx.translate(-(b.minX+b.maxX)/2,-(b.minY+b.maxY)/2);let max=sim?simStep:1e12,drawn=0;(d.colors||[]).forEach(c=>{let pts=c.points||[];ctx.strokeStyle=mode==='map'?'rgba(255,122,24,.75)':(mode==='2d'?'#1e293b':c.color||'#111');ctx.lineWidth=(mode==='3d'||mode==='true'?2.4:1.3)/z;ctx.lineCap='round';ctx.lineJoin='round';if(mode==='3d'||mode==='true'){ctx.shadowColor='rgba(0,0,0,.28)';ctx.shadowBlur=3/z;ctx.shadowOffsetX=1.5/z;ctx.shadowOffsetY=1.5/z}else ctx.shadowBlur=0;ctx.beginPath();let up=true;for(let p of pts){if(drawn++>max)break;if(p[2]!==0||up){ctx.moveTo(p[0],p[1]);up=false}else ctx.lineTo(p[0],p[1])}ctx.stroke()});ctx.restore();prog.style.width=currentData?Math.min(100,(simStep/(currentData.stitch_count||1))*100)+'%':'0%'}
+function setMode(m,btn){mode=m;document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');showTab('panda');sim=false;clearInterval(simTimer);render()}function toggleSim(){if(!currentData)return;showTab('panda');sim=!sim;if(sim){simStep=0;simTimer=setInterval(()=>{simStep+=Math.max(50,Math.floor((currentData.stitch_count||1000)/80));if(simStep>=(currentData.stitch_count||0)){sim=false;clearInterval(simTimer)}counter.textContent=Math.min(simStep,currentData.stitch_count||0)+' / '+(currentData.stitch_count||0);render()},70)}else clearInterval(simTimer)}
 function downloadCurrent(){if(!currentFile)return;let a=document.createElement('a');a.href=URL.createObjectURL(currentFile);a.download=currentFile.name;a.click()}
-
 function fd(action,format,includeFile=true){let form=new FormData();if(includeFile&&currentFile)form.append('file',currentFile);form.append('action',action);form.append('format',format||'dst');form.append('width_in',widthIn.value.trim());form.append('height_in',lockProp.checked?'':heightIn.value.trim());form.append('lock_mode',lockProp.checked?'on':'off');return form}
-async function submit(action,format,includeFile=true){if(includeFile&&!currentFile){alert('Upload file first');return}log('Submitting Wilcom job...');let r=await fetch(WORKER+'/jobs',{method:'POST',body:fd(action,format,includeFile)}),j=await r.json();log(j);if(j.ok){currentJob=j.job.id;if(action==='open')showTab('live');if(poller)clearInterval(poller);poller=setInterval(checkJob,1300)}}
-function sendOpen(){submit('open','dst',true)}
-function wilcomResizeOnly(){submit('resize_current','dst',false)}
-function wilcomExport(fmt){submit(widthIn.value.trim()?'resize_export':'export_current',fmt,false)}
-async function calW(){log(await(await fetch(WORKER+'/calibrate-width',{method:'POST'})).json())}
-async function calH(){log(await(await fetch(WORKER+'/calibrate-height',{method:'POST'})).json())}
-async function calLock(){log(await(await fetch(WORKER+'/calibrate-lock',{method:'POST'})).json())}
+async function submit(action,format,includeFile=true){if(includeFile&&!currentFile){alert('Upload file first');return}log('Submitting Panda Engine job...');let r=await fetch(WORKER+'/jobs',{method:'POST',body:fd(action,format,includeFile)}),j=await r.json();log(j);if(j.ok){currentJob=j.job.id;if(action==='open')showTab('live');if(poller)clearInterval(poller);poller=setInterval(checkJob,1300)}}function sendOpen(){submit('open','dst',true)}function wilcomResizeOnly(){submit('resize_current','dst',false)}function wilcomExport(fmt){submit(widthIn.value.trim()?'resize_export':'export_current',fmt,false)}async function calW(){log(await(await fetch(WORKER+'/calibrate-width',{method:'POST'})).json())}async function calH(){log(await(await fetch(WORKER+'/calibrate-height',{method:'POST'})).json())}async function calLock(){log(await(await fetch(WORKER+'/calibrate-lock',{method:'POST'})).json())}
 async function checkJob(){let j=await(await fetch(WORKER+'/jobs/'+currentJob)).json();log(j);checkWorker();if(j.ok&&(j.job.status==='done'||j.job.status==='error')){clearInterval(poller);if(j.job.status==='done'){let o=(j.job.outputs||[])[0];showDownloads(j.job.outputs);if(o){lastOutput=o;if(['dst','pes','jef'].includes(o.format))parseOutput(o)}}}}
-function showDownloads(outs){downloads.innerHTML='';(outs||[]).forEach(o=>{let a=document.createElement('a');a.href=WORKER+o.download_url;a.download=o.file;a.textContent='Download '+o.format.toUpperCase()+' — '+o.file;downloads.appendChild(a)})}
-async function parseOutput(o){log('Parsing Wilcom output...');let blob=await(await fetch(WORKER+o.download_url)).blob();let file=new File([blob],o.file);let form=new FormData();form.append('file',file);try{let r=await fetch(RENDER_API+'/api/parse',{method:'POST',body:form});if(!r.ok)throw Error('parse output failed');currentData=await r.json();fileName.textContent='Wilcom Output: '+o.file;updateInfo(currentData);showTab('panda');render();log('Wilcom output preview loaded.')}catch(e){log('Output exported but preview parse failed. '+e.message)}}
-function previewWilcomOutput(){if(lastOutput)parseOutput(lastOutput);else log('No Wilcom output yet.')}
+function showDownloads(outs){downloads.innerHTML='';if(!outs||!outs.length){downloads.innerHTML='<div class="help">No downloadable output for this action.</div>';return}outs.forEach(o=>{let div=document.createElement('div');div.className='download-card';div.innerHTML=`<div class="dico">${o.format.toUpperCase()}</div><div><b>${o.format.toUpperCase()} Export</b><span>${Math.round((o.size||0)/1024)} KB</span></div><a href="${WORKER+o.download_url}" download="${o.file}">↓</a>`;downloads.appendChild(div)})}
+async function parseOutput(o){log('Parsing exported output...');let blob=await(await fetch(WORKER+o.download_url)).blob();let file=new File([blob],o.file);let form=new FormData();form.append('file',file);try{let r=await fetch(RENDER_API+'/api/parse',{method:'POST',body:form});if(!r.ok)throw Error('parse output failed');currentData=await r.json();fileName.textContent='Panda Output: '+o.file;updateInfo(currentData);showTab('panda');render();log('Exported output preview loaded.')}catch(e){log('Output exported but preview parse failed. '+e.message)}}
 </script>
 </body>
 </html>
