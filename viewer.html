@@ -3,315 +3,65 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Panda Embroidery Family Pro</title>
+<title>Panda Embroidery Family VIP Viewer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#080b16;--panel:#0f172a;--panel2:#111c33;--card:#121b31;--line:#25314d;
-  --text:#eef4ff;--muted:#8fa0bd;--purple:#8b5cf6;--cyan:#22d3ee;--green:#22c55e;
-  --red:#ef4444;--orange:#f59e0b;--pink:#ec4899;--soft:rgba(139,92,246,.14);
-  --shadow:0 24px 70px rgba(0,0,0,.35)
-}
-*{box-sizing:border-box}
-html,body{height:100%;margin:0}
-body{font-family:"Plus Jakarta Sans",Inter,system-ui,sans-serif;background:
-  radial-gradient(circle at 12% 5%,rgba(139,92,246,.35),transparent 30%),
-  radial-gradient(circle at 90% 15%,rgba(34,211,238,.22),transparent 28%),
-  linear-gradient(135deg,#070a13,#0b1020 55%,#111827);color:var(--text);overflow:hidden}
-button,input,select{font-family:inherit}
-.app{height:100vh;display:grid;grid-template-columns:290px 1fr 360px;gap:14px;padding:14px}
-.sidebar,.right,.main{background:rgba(15,23,42,.76);border:1px solid rgba(148,163,184,.16);border-radius:28px;box-shadow:var(--shadow);backdrop-filter:blur(18px);overflow:hidden}
-.sidebar{display:flex;flex-direction:column}
-.brand{padding:22px;border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:center}
-.logo{width:56px;height:56px;border-radius:20px;background:linear-gradient(135deg,var(--purple),var(--cyan));display:grid;place-items:center;font-size:30px;box-shadow:0 14px 30px rgba(139,92,246,.3)}
-.brand h1{font-size:21px;line-height:1.06;margin:0;letter-spacing:-.6px}.brand p{margin:5px 0 0;color:var(--muted);font-size:12px}
-.nav{padding:14px;overflow:auto}.nav-title{font-size:10px;text-transform:uppercase;color:#64748b;letter-spacing:.12em;font-weight:800;margin:16px 10px 8px}
-.nav button{width:100%;height:43px;border:0;border-radius:15px;background:transparent;color:#cbd5e1;font-size:13px;font-weight:700;display:flex;align-items:center;gap:11px;padding:0 12px;cursor:pointer}
-.nav button:hover,.nav button.active{background:rgba(139,92,246,.16);color:white}.nav .ico{width:27px;height:27px;border-radius:10px;background:rgba(255,255,255,.07);display:grid;place-items:center}
-.pro-card{margin:14px;padding:18px;border-radius:24px;background:linear-gradient(135deg,rgba(139,92,246,.25),rgba(34,211,238,.12));border:1px solid rgba(139,92,246,.25)}
-.pro-card h3{margin:0 0 7px;font-size:16px}.pro-card p{margin:0;color:#a8b4cf;font-size:12px;line-height:1.5}.chip{display:inline-flex;margin-top:12px;border-radius:999px;padding:7px 11px;background:rgba(34,197,94,.16);color:#86efac;font-size:11px;font-weight:800}
-.main{display:grid;grid-template-rows:76px 1fr 128px}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid var(--line)}
-.title h2{margin:0;font-size:24px;letter-spacing:-.6px}.title p{margin:5px 0 0;color:var(--muted);font-size:12px}
-.actions{display:flex;gap:10px;align-items:center}.btn{height:42px;padding:0 15px;border-radius:15px;border:1px solid rgba(148,163,184,.18);background:rgba(255,255,255,.05);color:#e2e8f0;font-size:13px;font-weight:800;cursor:pointer}
-.btn.primary{background:linear-gradient(135deg,var(--purple),var(--cyan));color:white;border:0;box-shadow:0 12px 28px rgba(139,92,246,.25)}
-.btn.green{background:linear-gradient(135deg,#16a34a,#22c55e);border:0;color:white}.btn:disabled{opacity:.4;cursor:not-allowed}
-.workspace{padding:16px;display:grid;grid-template-rows:auto 1fr;gap:14px;min-height:0}
-.file-strip{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.045);border:1px solid rgba(148,163,184,.15);border-radius:24px;padding:14px 16px}
-.file-left{display:flex;gap:12px;align-items:center}.file-type{width:48px;height:48px;border-radius:16px;background:rgba(139,92,246,.16);border:1px solid rgba(139,92,246,.28);display:grid;place-items:center;font-weight:900;color:#c4b5fd}
-.file-left h3{margin:0;font-size:16px}.file-left p{margin:4px 0 0;font-size:12px;color:var(--muted)}
-.viewer{position:relative;background:#0b1220;border:1px solid rgba(148,163,184,.18);border-radius:28px;overflow:hidden;min-height:0}
-.viewer-head{position:absolute;top:12px;left:12px;right:12px;z-index:4;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
-.mode-tabs{display:flex;gap:7px;background:rgba(2,6,23,.75);border:1px solid rgba(148,163,184,.18);border-radius:18px;padding:6px;backdrop-filter:blur(12px);pointer-events:auto}
-.mode-tabs button{height:34px;border:0;border-radius:13px;background:transparent;color:#aab6d0;padding:0 12px;font-weight:800;font-size:12px;cursor:pointer}.mode-tabs button.active{background:linear-gradient(135deg,var(--purple),var(--cyan));color:white}
-.zoom-pill{background:rgba(2,6,23,.75);border:1px solid rgba(148,163,184,.18);border-radius:999px;padding:9px 13px;font-size:12px;color:#cbd5e1;pointer-events:auto}
-#canvas{width:100%;height:100%;display:block;background:
-  linear-gradient(45deg,rgba(255,255,255,.03) 25%,transparent 25%),
-  linear-gradient(-45deg,rgba(255,255,255,.03) 25%,transparent 25%),
-  linear-gradient(45deg,transparent 75%,rgba(255,255,255,.03) 75%),
-  linear-gradient(-45deg,transparent 75%,rgba(255,255,255,.03) 75%);background-size:28px 28px;background-position:0 0,0 14px,14px -14px,-14px 0;background-color:#0b1220}
-.drop{position:absolute;inset:0;display:grid;place-items:center;text-align:center;z-index:3;background:radial-gradient(circle,rgba(139,92,246,.10),transparent 45%)}
-.drop-box{width:min(520px,80%);padding:42px;border-radius:32px;background:rgba(15,23,42,.82);border:1.5px dashed rgba(34,211,238,.45);box-shadow:var(--shadow);backdrop-filter:blur(18px)}
-.drop-box .big{font-size:62px}.drop-box h2{font-size:30px;margin:12px 0 8px;letter-spacing:-.8px}.drop-box p{margin:0 0 20px;color:var(--muted)}
-.bottom-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;padding:0 16px 16px}
-.stat{background:rgba(255,255,255,.045);border:1px solid rgba(148,163,184,.14);border-radius:22px;padding:15px}.stat span{display:block;color:#94a3b8;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}.stat b{display:block;margin-top:7px;font-size:20px}
-.right{display:flex;flex-direction:column;min-height:0}.panel-tabs{display:flex;border-bottom:1px solid var(--line)}.panel-tabs button{flex:1;height:55px;border:0;background:transparent;color:#94a3b8;font-weight:900;font-size:12px;cursor:pointer}.panel-tabs button.active{color:#fff;background:rgba(139,92,246,.12)}
-.panel-body{padding:16px;overflow:auto}.card{background:rgba(255,255,255,.045);border:1px solid rgba(148,163,184,.15);border-radius:24px;padding:16px;margin-bottom:14px}
-.card h3{font-size:16px;margin:0 0 12px}.row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid rgba(148,163,184,.12);padding:9px 0;font-size:13px}.row:last-child{border-bottom:0}.row span{color:#94a3b8}.row b{text-align:right}
-.scale-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.input{height:45px;border-radius:15px;border:1px solid rgba(148,163,184,.18);background:rgba(2,6,23,.4);color:white;padding:0 12px;font-weight:800;outline:none}.input:focus{border-color:var(--cyan)}
-.tool-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tool{height:92px;border-radius:20px;border:1px solid rgba(148,163,184,.15);background:rgba(255,255,255,.045);color:white;cursor:pointer;text-align:left;padding:13px;font-weight:800}.tool:hover{border-color:rgba(34,211,238,.5);background:rgba(34,211,238,.08)}.tool i{display:block;font-style:normal;font-size:23px;margin-bottom:8px}
-.bridge{border-color:rgba(34,197,94,.3);background:linear-gradient(135deg,rgba(34,197,94,.10),rgba(34,211,238,.08))}
-.status-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#64748b;margin-right:6px}.status-dot.on{background:#22c55e;box-shadow:0 0 0 5px rgba(34,197,94,.12)}.status-dot.off{background:#ef4444}
-.color-list{max-height:210px;overflow:auto}.color-item{display:flex;align-items:center;gap:10px;padding:9px;border-radius:14px;background:rgba(255,255,255,.035);margin-bottom:7px}.sw{width:28px;height:28px;border-radius:10px;border:1px solid rgba(255,255,255,.25)}.color-item b{font-size:12px}.color-item small{display:block;color:#94a3b8}
-.toast{position:fixed;right:22px;bottom:22px;z-index:20;background:#020617;color:white;border:1px solid rgba(148,163,184,.2);padding:14px 16px;border-radius:16px;display:none;box-shadow:var(--shadow);max-width:420px}
-.loader{position:fixed;inset:0;z-index:19;background:rgba(2,6,23,.62);display:none;place-items:center;backdrop-filter:blur(8px)}.loader-box{background:#0f172a;border:1px solid rgba(148,163,184,.2);border-radius:24px;padding:26px 34px;text-align:center;box-shadow:var(--shadow)}.spinner{width:44px;height:44px;border-radius:50%;border:4px solid rgba(255,255,255,.12);border-top-color:var(--cyan);animation:spin .8s linear infinite;margin:auto auto 14px}@keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:1200px){body{overflow:auto}.app{height:auto;grid-template-columns:1fr}.sidebar{display:none}.right{min-height:500px}.main{min-height:900px}.bottom-stats{grid-template-columns:repeat(2,1fr)}}
+:root{--bg:#070b16;--panel:#101827;--card:#111c33;--line:#26324d;--text:#eef5ff;--muted:#94a3b8;--purple:#8b5cf6;--cyan:#22d3ee;--green:#22c55e;--red:#ef4444;--orange:#f59e0b}
+*{box-sizing:border-box}body{margin:0;font-family:"Plus Jakarta Sans",Arial;background:radial-gradient(circle at 10% 0%,rgba(139,92,246,.34),transparent 30%),linear-gradient(135deg,#070b16,#0b1220 60%,#111827);color:var(--text)}
+.app{min-height:100vh;display:grid;grid-template-columns:320px 1fr 390px;gap:14px;padding:14px}
+.side,.main,.right{background:rgba(15,23,42,.82);border:1px solid rgba(148,163,184,.16);border-radius:26px;overflow:hidden;box-shadow:0 25px 70px rgba(0,0,0,.35)}
+.side{padding:20px}.brand{display:flex;gap:12px;align-items:center;margin-bottom:18px}.logo{width:54px;height:54px;border-radius:18px;background:linear-gradient(135deg,var(--purple),var(--cyan));display:grid;place-items:center;font-size:29px}.brand h1{font-size:20px;margin:0}.brand p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.card{background:rgba(255,255,255,.045);border:1px solid rgba(148,163,184,.15);border-radius:22px;padding:16px;margin-bottom:14px}
+button{height:42px;padding:0 14px;border:0;border-radius:14px;background:rgba(255,255,255,.08);color:#fff;font-weight:800;cursor:pointer}button.primary{background:linear-gradient(135deg,var(--purple),var(--cyan))}button.green{background:var(--green)}button.orange{background:var(--orange)}button:disabled{opacity:.45}
+input,select{height:43px;border-radius:14px;border:1px solid rgba(148,163,184,.18);background:#0b1220;color:#fff;padding:0 12px;font-weight:700;outline:none}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(148,163,184,.12)}.row:last-child{border:0}.row span{color:var(--muted)}.status{padding:6px 10px;border-radius:999px;background:#334155;font-size:12px;font-weight:800}.on{background:#16a34a}.off{background:#dc2626}
+.main{display:grid;grid-template-rows:auto 1fr auto}.top{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.top h2{margin:0}.top p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.viewer{position:relative;margin:16px;background:#0b1220;border:1px solid rgba(148,163,184,.18);border-radius:26px;min-height:480px;overflow:hidden}canvas{width:100%;height:100%;display:block;background-color:#0b1220}.drop{position:absolute;inset:0;display:grid;place-items:center;text-align:center}.dropbox{border:2px dashed rgba(34,211,238,.45);border-radius:28px;padding:40px;background:rgba(15,23,42,.75)}.dropbox h2{font-size:28px;margin:8px 0}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:0 16px 16px}.stat{background:rgba(255,255,255,.045);border:1px solid rgba(148,163,184,.14);border-radius:18px;padding:12px}.stat span{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;font-weight:800}.stat b{display:block;font-size:18px;margin-top:5px}
+.right{padding:16px;overflow:auto}.checks label{display:block;margin:8px 0;color:#dbeafe}.log{background:#050914;color:#cbd5e1;border-radius:16px;padding:14px;white-space:pre-wrap;font-size:12px;min-height:170px}.downloads a{display:block;color:#67e8f9;margin:8px 0;font-weight:800}.pill{display:inline-block;margin:5px 5px 0 0;padding:5px 9px;border-radius:999px;background:#1e293b;color:#cbd5e1;font-size:12px}
+@media(max-width:1100px){.app{grid-template-columns:1fr}.side,.right{order:2}}
 </style>
 </head>
 <body>
-<input id="fileInput" type="file" accept=".dst,.pes,.jef,.vp3,.hus,.exp,.xxx,.emb,.sew" style="display:none">
-<div class="loader" id="loader"><div class="loader-box"><div class="spinner"></div><div id="loaderText">Loading...</div></div></div>
-<div class="toast" id="toast"></div>
-
+<input id="fileInput" type="file" accept=".emb,.dst,.pes,.jef,.exp,.vp3,.hus" style="display:none">
 <div class="app">
-  <aside class="sidebar">
-    <div class="brand"><div class="logo">🐼</div><div><h1>Panda Embroidery Family</h1><p>Pro stitch viewer & production tools</p></div></div>
-    <div class="nav">
-      <div class="nav-title">Main</div>
-      <button class="active" onclick="openFile()"><span class="ico">📂</span>Open Design</button>
-      <button onclick="exportPDF()"><span class="ico">📄</span>Production PDF</button>
-      <button onclick="downloadPNG()"><span class="ico">🖼️</span>PNG Preview</button>
-      <div class="nav-title">Tools</div>
-      <button onclick="setMode('trueview')"><span class="ico">✨</span>TrueView Pro</button>
-      <button onclick="setMode('density')"><span class="ico">🔥</span>Density Map</button>
-      <button onclick="analyzeFile()"><span class="ico">🧪</span>Quality Analyze</button>
-      <button onclick="repairFile()"><span class="ico">🛠️</span>Auto Repair</button>
-      <button onclick="checkBridge()"><span class="ico">⚡</span>Wilcom Bridge</button>
-    </div>
-    <div class="pro-card"><h3>Wilcom Bridge Ready</h3><p>Optional Windows bridge detected through native SFFConverter proof. Use only with your licensed Wilcom runtime.</p><span class="chip" id="bridgeChip">Bridge: not checked</span></div>
-  </aside>
-
-  <main class="main">
-    <header class="topbar">
-      <div class="title"><h2>Embroidery Viewer Pro</h2><p>Modern DST/PES/JEF preview, repair, resize, PDF & Wilcom Bridge mode</p></div>
-      <div class="actions">
-        <button class="btn" onclick="checkBridge()">⚡ Bridge</button>
-        <button class="btn" onclick="exportPDF()" id="pdfBtn" disabled>PDF</button>
-        <button class="btn primary" onclick="openFile()">Open File</button>
-      </div>
-    </header>
-
-    <section class="workspace">
-      <div class="file-strip">
-        <div class="file-left"><div class="file-type" id="fmtBox">DST</div><div><h3 id="fileName">No file loaded</h3><p id="fileMeta">Upload DST, PES, JEF, VP3, HUS, EXP, XXX, EMB</p></div></div>
-        <div class="actions"><button class="btn" onclick="saveCurrent()" id="saveBtn" disabled>Download</button><button class="btn green" onclick="saveResized()" id="resizeSaveBtn" disabled>Save Recalc</button></div>
-      </div>
-
-      <div class="viewer" id="viewer">
-        <div class="viewer-head">
-          <div class="mode-tabs">
-            <button id="mTrue" class="active" onclick="setMode('trueview')">✨ TrueView</button>
-            <button id="mReal" onclick="setMode('real')">2D</button>
-            <button id="mWire" onclick="setMode('wire')">Wire</button>
-            <button id="mDensity" onclick="setMode('density')">Density</button>
-            <button onclick="toggleSim()">▶ Sew</button>
-          </div>
-          <div class="zoom-pill">Zoom <span id="zoomText">100%</span> <button class="btn" style="height:28px;padding:0 8px;margin-left:6px" onclick="zoomIn()">+</button><button class="btn" style="height:28px;padding:0 8px" onclick="zoomOut()">−</button></div>
-        </div>
-        <canvas id="canvas"></canvas>
-        <div class="drop" id="drop">
-          <div class="drop-box"><div class="big">🧵</div><h2>Drop embroidery file</h2><p>Open DST/PES/JEF and preview with realistic stitch shading.</p><button class="btn primary" onclick="openFile()">Choose File</button></div>
-        </div>
-      </div>
-    </section>
-
-    <div class="bottom-stats">
-      <div class="stat"><span>Stitches</span><b id="stitches">—</b></div>
-      <div class="stat"><span>Size</span><b id="dims">—</b></div>
-      <div class="stat"><span>Colors</span><b id="colors">—</b></div>
-      <div class="stat"><span>Trims</span><b id="trims">—</b></div>
-      <div class="stat"><span>Thread</span><b id="thread">—</b></div>
-    </div>
-  </main>
-
-  <aside class="right">
-    <div class="panel-tabs"><button class="active">Inspector</button><button onclick="checkBridge()">Bridge</button></div>
-    <div class="panel-body">
-      <div class="card">
-        <h3>Resize & Recalculate</h3>
-        <div class="scale-grid"><input class="input" id="scaleInput" type="number" value="100" min="10" max="500" oninput="updateScalePreview()"><input class="input" value="%" readonly></div>
-        <div class="row"><span>New Width</span><b id="newW">—</b></div>
-        <div class="row"><span>New Height</span><b id="newH">—</b></div>
-        <button class="btn primary" style="width:100%;margin-top:12px" onclick="applyScale()">Apply Size</button>
-        <button class="btn green" style="width:100%;margin-top:10px" onclick="saveResized()">Download Recalc File</button>
-      </div>
-
-      <div class="card bridge">
-        <h3><span class="status-dot" id="bridgeDot"></span> Wilcom Bridge</h3>
-        <div class="row"><span>Status</span><b id="bridgeStatus">Not checked</b></div>
-        <div class="row"><span>URL</span><b>localhost:7070</b></div>
-        <button class="btn" style="width:100%;margin-top:12px" onclick="checkBridge()">Check Bridge</button>
-        <button class="btn primary" style="width:100%;margin-top:10px" onclick="wilcomConvert()" id="wilcomBtn" disabled>Wilcom Automation</button><button class="btn green" style="width:100%;margin-top:10px" onclick="checkWilcomExport()">Check Export & Download</button>
-      </div>
-
-      <div class="card">
-        <h3>Quick Tools</h3>
-        <div class="tool-grid">
-          <button class="tool" onclick="analyzeFile()"><i>🧪</i>Analyze</button>
-          <button class="tool" onclick="repairFile()"><i>🛠️</i>Repair</button>
-          <button class="tool" onclick="exportPDF()"><i>📄</i>PDF</button>
-          <button class="tool" onclick="toggleSim()"><i>▶</i>Sew Sim</button>
-        </div>
-      </div>
-
-      <div class="card"><h3>Design Info</h3><div id="infoRows"><div class="row"><span>Status</span><b>No file</b></div></div></div>
-      <div class="card"><h3>Thread Colors</h3><div class="color-list" id="colorList"><div style="color:#94a3b8;font-size:13px">No colors loaded.</div></div></div>
-      <div class="card"><h3>Quality Result</h3><div id="analysisBox" style="color:#a8b4cf;font-size:13px;line-height:1.6">Run Quality Analyze.</div></div>
-    </div>
-  </aside>
+<aside class="side">
+<div class="brand"><div class="logo">🐼</div><div><h1>Panda VIP Viewer</h1><p>Preview + Wilcom resize/export worker</p></div></div>
+<div class="card"><h3>Bridge Auto Status</h3><div class="row"><span>Render API</span><b id="renderStatus" class="status">checking</b></div><div class="row"><span>Wilcom Worker</span><b id="workerStatus" class="status">checking</b></div><div class="row"><span>Queue</span><b id="q">—</b></div><div class="row"><span>Busy</span><b id="busy">—</b></div><button onclick="checkAll()">Refresh</button></div>
+<div class="card"><h3>Resize with Wilcom</h3><p style="color:var(--muted);font-size:13px">Size & PDF are generated by Wilcom worker.</p><input id="widthIn" placeholder="Width inch e.g. 4.00" style="width:100%;margin-bottom:8px"><button style="width:100%" onclick="calibrate()">Calibrate Width Field</button></div>
+</aside>
+<main class="main">
+<div class="top"><div><h2>Embroidery Live Viewer</h2><p>Original preview instantly. Resized output preview after Wilcom job.</p></div><button class="primary" onclick="fileInput.click()">Upload File</button></div>
+<div class="viewer"><canvas id="canvas"></canvas><div class="drop" id="drop"><div class="dropbox"><div style="font-size:60px">🧵</div><h2>Upload EMB / DST / PES / JEF</h2><p>Normal preview uses Render. Wilcom worker handles resize/export/PDF.</p><button class="primary" onclick="fileInput.click()">Choose File</button></div></div></div>
+<div class="stats"><div class="stat"><span>Stitches</span><b id="stitches">—</b></div><div class="stat"><span>Size</span><b id="dims">—</b></div><div class="stat"><span>Colors</span><b id="colors">—</b></div><div class="stat"><span>Format</span><b id="fmtbox">—</b></div><div class="stat"><span>Mode</span><b id="modebox">Original</b></div></div>
+</main>
+<aside class="right">
+<div class="card"><h3>File</h3><div class="row"><span>Name</span><b id="fname">No file</b></div><div class="row"><span>Original</span><b id="origInfo">—</b></div><div class="row"><span>Wilcom Output</span><b id="outInfo">—</b></div></div>
+<div class="card"><h3>Export Formats</h3><div class="checks"><label><input type="checkbox" class="format" value="dst" checked> DST</label><label><input type="checkbox" class="format" value="pes"> PES</label><label><input type="checkbox" class="format" value="jef"> JEF</label><label><input type="checkbox" class="format" value="pdf"> PDF Worksheet</label></div><button class="green" style="width:100%;margin-top:10px" onclick="startWilcomJob()">Resize / Export with Wilcom</button></div>
+<div class="card"><h3>Job Status</h3><div class="log" id="log">Ready.</div></div>
+<div class="card downloads"><h3>Downloads</h3><div id="downloads">No outputs yet.</div></div>
+</aside>
 </div>
-
 <script>
-const API = "https://panda-viewer.onrender.com";
-const WILCOM = "http://localhost:7081";
-let D=null, OD=null, curFile=null, mode='trueview', zoom=1, ox=0, oy=0, running=false, runIndex=0, timer=null;
-const fileInput=document.getElementById('fileInput'), canvas=document.getElementById('canvas'), ctx=canvas.getContext('2d'), viewer=document.getElementById('viewer');
-function toast(t){const el=document.getElementById('toast');el.textContent=t;el.style.display='block';setTimeout(()=>el.style.display='none',3800)}
-function load(t){document.getElementById('loaderText').textContent=t;document.getElementById('loader').style.display='grid'} function unload(){document.getElementById('loader').style.display='none'}
-function openFile(){fileInput.value='';fileInput.click()} fileInput.onchange=()=>handleFile(fileInput.files[0]);
-document.addEventListener('dragover',e=>e.preventDefault()); document.addEventListener('drop',e=>{e.preventDefault();if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0])});
-async function handleFile(file){
- if(!file)return;
- curFile=file;
- const ext=(file.name.split('.').pop()||'').toLowerCase();
-
- if(ext==='emb'){
-   D=null; OD=null;
-   document.getElementById('drop').style.display='none';
-   document.getElementById('fileName').textContent=file.name;
-   document.getElementById('fmtBox').textContent='EMB';
-   document.getElementById('fileMeta').textContent='Wilcom EMB detected • Use Automation Bridge';
-   document.getElementById('infoRows').innerHTML='<div class="row"><span>Format</span><b>Wilcom EMB</b></div><div class="row"><span>Mode</span><b>Automation Bridge</b></div><div class="row"><span>Next</span><b>Stage → Open Wilcom → Export</b></div>';
-   document.getElementById('analysisBox').innerHTML='EMB uses Wilcom Automation Bridge. Click <b>Wilcom Automation</b>.';
-   ['wilcomBtn'].forEach(id=>{let x=document.getElementById(id);if(x)x.disabled=false});
-   toast('EMB detected. Normal parser skipped. Use Wilcom Automation.');
-   await checkBridge();
-   return;
- }
-
- load('Parsing '+file.name+'...');
- let fd=new FormData();fd.append('file',file);
- try{
-   let r=await fetch(API+'/api/parse',{method:'POST',body:fd});
-   if(!r.ok){let e=await r.json().catch(()=>({}));throw new Error(e.error||'API '+r.status)}
-   D=await r.json();OD=JSON.parse(JSON.stringify(D));
-   document.getElementById('drop').style.display='none';
-   ['pdfBtn','saveBtn','resizeSaveBtn','wilcomBtn'].forEach(id=>{let x=document.getElementById(id);if(x)x.disabled=false});
-   updateUI();fitView();toast('Design loaded')
- }catch(e){alert('Parse error: '+e.message)}
- finally{unload()}
-}
-function updateUI(){if(!D)return;document.getElementById('fmtBox').textContent=D.format||'DST';document.getElementById('fileName').textContent=D.filename||curFile.name;document.getElementById('fileMeta').textContent=`${D.width_in}" × ${D.height_in}" • ${Number(D.stitch_count).toLocaleString()} stitches • ${D.color_count} colors`;document.getElementById('stitches').textContent=Number(D.stitch_count).toLocaleString();document.getElementById('dims').textContent=`${D.width_in}" × ${D.height_in}"`;document.getElementById('colors').textContent=D.color_count;document.getElementById('trims').textContent=D.trim_count;document.getElementById('thread').textContent='~'+D.thread_m+'m';document.getElementById('infoRows').innerHTML=`<div class="row"><span>Format</span><b>${D.format}</b></div><div class="row"><span>Size mm</span><b>${D.width_mm} × ${D.height_mm}</b></div><div class="row"><span>Jumps</span><b>${Number(D.jump_count).toLocaleString()}</b></div><div class="row"><span>Density</span><b>${D.density} st/cm²</b></div><div class="row"><span>Time</span><b>${D.time_min} min</b></div>`;document.getElementById('colorList').innerHTML=(D.colors||[]).map(c=>`<div class="color-item"><div class="sw" style="background:${c.color}"></div><div><b>${c.name||'Color '+(c.index+1)}</b><small>${Number(c.count||0).toLocaleString()} stitches</small></div></div>`).join('')||'No colors';updateScalePreview()}
-function resizeCanvas(){const r=viewer.getBoundingClientRect();canvas.width=r.width;canvas.height=r.height;render()} window.addEventListener('resize',resizeCanvas);setTimeout(resizeCanvas,100);
-function fitView(){if(!D){resizeCanvas();return}resizeCanvas();let b=D.bounds,w=(b.maxX-b.minX)||1,h=(b.maxY-b.minY)||1;zoom=Math.min(canvas.width*.76/w,canvas.height*.76/h);ox=0;oy=0;render()}
-function zoomIn(){zoom*=1.2;render()} function zoomOut(){zoom/=1.2;render()}
-function setMode(m){mode=m;['True','Real','Wire','Density'].forEach(x=>{let el=document.getElementById('m'+x);if(el)el.classList.remove('active')});({trueview:'mTrue',real:'mReal',wire:'mWire',density:'mDensity'}[m]&&document.getElementById({trueview:'mTrue',real:'mReal',wire:'mWire',density:'mDensity'}[m]).classList.add('active'));render()}
-function shade(hex,amt){hex=(hex||'#555').replace('#','');if(hex.length!==6)return'#555';let r=parseInt(hex.slice(0,2),16)+amt,g=parseInt(hex.slice(2,4),16)+amt,b=parseInt(hex.slice(4,6),16)+amt;return'#'+[r,g,b].map(v=>Math.max(0,Math.min(255,v)).toString(16).padStart(2,'0')).join('')}
-function render(){ctx.clearRect(0,0,canvas.width,canvas.height);document.getElementById('zoomText').textContent=Math.round(zoom*100)+'%';if(!D)return;let b=D.bounds,cx=(b.minX+b.maxX)/2,cy=(b.minY+b.maxY)/2;ctx.save();ctx.translate(canvas.width/2+ox,canvas.height/2+oy);ctx.scale(zoom,zoom);ctx.translate(-cx,-cy);if(mode==='density'){renderDensity();ctx.restore();return}let max=running?runIndex:Infinity,total=0;(D.colors||[]).forEach(col=>{let pts=col.points||[];if(pts.length<2)return;if(mode==='trueview'){for(let i=1;i<pts.length;i++){if(total++>max)break;let p0=pts[i-1],p1=pts[i];if(p1[2]!==0)continue;let color=col.color||'#111',dark=shade(color,-50),light=shade(color,70);ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='rgba(0,0,0,.28)';ctx.lineWidth=4.4/zoom;ctx.beginPath();ctx.moveTo(p0[0]+1/zoom,p0[1]+1/zoom);ctx.lineTo(p1[0]+1/zoom,p1[1]+1/zoom);ctx.stroke();ctx.strokeStyle=dark;ctx.lineWidth=3.1/zoom;ctx.beginPath();ctx.moveTo(p0[0],p0[1]);ctx.lineTo(p1[0],p1[1]);ctx.stroke();ctx.strokeStyle=color;ctx.lineWidth=2.15/zoom;ctx.beginPath();ctx.moveTo(p0[0],p0[1]);ctx.lineTo(p1[0],p1[1]);ctx.stroke();ctx.strokeStyle=light;ctx.lineWidth=.65/zoom;ctx.beginPath();ctx.moveTo(p0[0],p0[1]);ctx.lineTo(p1[0],p1[1]);ctx.stroke()}}else{ctx.strokeStyle=mode==='wire'?'#dbeafe':(col.color||'#fff');ctx.lineWidth=1.2/zoom;ctx.beginPath();let up=true;for(let i=0;i<pts.length;i++){if(total++>max)break;let [x,y,t]=pts[i];if(t!==0||up){ctx.moveTo(x,y);up=false}else ctx.lineTo(x,y)}ctx.stroke()}});ctx.restore()}
-function renderDensity(){let grid=18,map=new Map();(D.colors||[]).forEach(c=>(c.points||[]).forEach(p=>{if(p[2]!==0)return;let k=Math.floor(p[0]/grid)+','+Math.floor(p[1]/grid);map.set(k,(map.get(k)||0)+1)}));let mx=Math.max(...map.values(),1);map.forEach((v,k)=>{let [gx,gy]=k.split(',').map(Number);ctx.fillStyle=`rgba(239,68,68,${Math.min(.8,v/mx)})`;ctx.fillRect(gx*grid,gy*grid,grid,grid)})}
-function toggleSim(){if(!D)return;if(running){running=false;clearInterval(timer);return}running=true;runIndex=0;let total=(D.colors||[]).reduce((s,c)=>s+(c.points?.length||0),0);timer=setInterval(()=>{runIndex+=240;if(runIndex>=total){clearInterval(timer);running=false}render()},35)}
-function updateScalePreview(){if(!D)return;let s=(parseFloat(document.getElementById('scaleInput').value)||100)/100;document.getElementById('newW').textContent=(OD.width_in*s).toFixed(2)+'"';document.getElementById('newH').textContent=(OD.height_in*s).toFixed(2)+'"'}
-function applyScale(){if(!D)return;let s=(parseFloat(document.getElementById('scaleInput').value)||100)/100;D.width_mm=+(OD.width_mm*s).toFixed(1);D.height_mm=+(OD.height_mm*s).toFixed(1);D.width_in=+(D.width_mm/25.4).toFixed(2);D.height_in=+(D.height_mm/25.4).toFixed(2);updateUI();toast('Size applied. Download recalc file next.')}
-async function saveCurrent(){await downloadFile(false)} async function saveResized(){await downloadFile(true)}
-async function downloadFile(force){if(!D||!curFile)return;let ext=(D.format||curFile.name.split('.').pop()).toLowerCase(),changed=force||Math.abs(D.width_mm-OD.width_mm)>.05||Math.abs(D.height_mm-OD.height_mm)>.05;load(changed?'Saving recalculated file...':'Preparing file...');let fd=new FormData();fd.append('file',curFile);fd.append('format',ext);let url=API+'/api/convert';if(changed){url=API+'/api/resize';fd.append('width_mm',D.width_mm);fd.append('height_mm',D.height_mm);fd.append('recalculate','true')}try{let r=await fetch(url,{method:'POST',body:fd});if(!r.ok){let e=await r.json().catch(()=>({}));throw new Error(e.error||'Server '+r.status)}let blob=await r.blob(),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=(D.filename||curFile.name).replace(/\.[^.]+$/,'')+(changed?'_recalc':'')+'.'+ext;a.click();URL.revokeObjectURL(u);toast('Downloaded')}catch(e){alert('Download error: '+e.message)}finally{unload()}}
-async function exportPDF(){if(!D)return;load('Generating production PDF...');try{let r=await fetch(API+'/api/pdf',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({design:D,preview_b64:canvas.toDataURL('image/png')})});if(!r.ok){let e=await r.json().catch(()=>({}));throw new Error(e.error||'Server '+r.status)}let blob=await r.blob(),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=(D.filename||'design')+'_production.pdf';a.click();URL.revokeObjectURL(u);toast('PDF downloaded')}catch(e){alert('PDF error: '+e.message)}finally{unload()}}
-function downloadPNG(){if(!D)return;let a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download=(D.filename||'preview')+'.png';a.click()}
-async function analyzeFile(){if(!curFile)return;load('Analyzing design...');let fd=new FormData();fd.append('file',curFile);try{let r=await fetch(API+'/api/analyze',{method:'POST',body:fd});if(!r.ok){let e=await r.json().catch(()=>({}));throw new Error(e.error||'Server '+r.status)}let j=await r.json(),a=j.analysis||{};document.getElementById('analysisBox').innerHTML=`<b>Score: ${a.score}/100</b><br>Avg stitch: ${a.avg_stitch_length_mm}mm<br>Max density: ${a.max_density_st_cm2} st/cm²<br>Long stitches: ${a.long_stitches_count}<br>Micro stitches: ${a.micro_stitches_count}<br>${(a.warnings||[]).map(w=>'⚠ '+w).join('<br>')||'✅ No major issue found'}`;toast('Analyze complete')}catch(e){alert('Analyze error: '+e.message)}finally{unload()}}
-async function repairFile(){if(!curFile)return;let ext=(D?.format||curFile.name.split('.').pop()).toLowerCase();load('Repairing stitches...');let fd=new FormData();fd.append('file',curFile);fd.append('format',ext);fd.append('max_stitch_mm','6');fd.append('min_stitch_mm','0.2');try{let r=await fetch(API+'/api/repair',{method:'POST',body:fd});if(!r.ok){let e=await r.json().catch(()=>({}));throw new Error(e.error||'Server '+r.status)}let blob=await r.blob(),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=curFile.name.replace(/\.[^.]+$/,'')+'_repaired.'+ext;a.click();URL.revokeObjectURL(u);toast('Repair downloaded')}catch(e){alert('Repair error: '+e.message)}finally{unload()}}
-async function checkBridge(){
- let dot=document.getElementById('bridgeDot'),st=document.getElementById('bridgeStatus'),chip=document.getElementById('bridgeChip');
- try{
-   let r=await fetch(WILCOM+'/health',{cache:'no-store'});
-   let j=await r.json();
-   dot.className='status-dot on';
-   st.textContent=j.wilcom_exe_found?'Automation Online':'Online / Wilcom EXE missing';
-   chip.textContent='Bridge: automation online';
-   document.getElementById('wilcomBtn').disabled=false;
-   toast('Automation bridge online')
- }catch(e){
-   dot.className='status-dot off';
-   st.textContent='Offline';
-   chip.textContent='Bridge: offline';
-   toast('Automation bridge offline. Run run_bridge.bat on port 7080.')
- }
-}
-async function wilcomConvert(){
- if(!curFile)return;
- load('Staging file in Wilcom Automation Bridge...');
- let fd=new FormData();fd.append('file',curFile);
-
- try{
-   // 1. Stage file in automation bridge uploads folder
-   let stage=await fetch(WILCOM+'/stage-file',{method:'POST',body:fd});
-   if(!stage.ok){
-     let e=await stage.json().catch(()=>({}));
-     throw new Error(e.error||'Stage failed '+stage.status);
-   }
-   let sj=await stage.json();
-
-   // 2. Ask bridge to open file in Wilcom
-   load('Opening file in Wilcom...');
-   let open=await fetch(WILCOM+'/open-in-wilcom',{
-     method:'POST',
-     headers:{'Content-Type':'application/json'},
-     body:JSON.stringify({input_path:sj.input_path})
-   });
-   if(!open.ok){
-     let e=await open.json().catch(()=>({}));
-     throw new Error(e.error||'Open Wilcom failed '+open.status);
-   }
-
-   unload();
-   alert(
-     'File opened/staged in Wilcom.\n\n' +
-     'Now export/save from Wilcom into this folder:\n' +
-     'exports folder inside panda_wilcom_automation_bridge_v1\n\n' +
-     'After export, click OK then press Wilcom Automation again and choose Check Export.'
-   );
-
-   document.getElementById('analysisBox').innerHTML =
-     'File staged: <br><b>'+sj.input_path+'</b><br><br>' +
-     'Now export from Wilcom into bridge <b>exports</b> folder. Then click <b>Check Export</b>.';
-
- }catch(e){
-   unload();
-   alert('Wilcom automation error: '+e.message);
- }
-}
-
-async function checkWilcomExport(){
- load('Checking exported file...');
- try{
-   let r=await fetch(WILCOM+'/manual-export-done',{method:'POST'});
-   if(!r.ok){
-     let e=await r.json().catch(()=>({}));
-     throw new Error(e.message||e.error||'No export found');
-   }
-   let j=await r.json();
-   let fileUrl=WILCOM+j.download_url;
-   let a=document.createElement('a');
-   a.href=fileUrl;
-   a.download=j.latest_export;
-   a.click();
-   toast('Export found and download started');
- }catch(e){
-   alert('Export check: '+e.message);
- }finally{
-   unload();
- }
-}
+const RENDER_API="https://panda-viewer.onrender.com";
+const WORKER="http://localhost:7090";
+let currentFile=null, originalData=null, resultData=null, poller=null, currentJob=null;
+const canvas=document.getElementById('canvas'), ctx=canvas.getContext('2d');
+const log=x=>document.getElementById('log').textContent=typeof x==='string'?x:JSON.stringify(x,null,2);
+async function checkAll(){try{let r=await fetch(RENDER_API+'/api/health');document.getElementById('renderStatus').textContent=r.ok?'online':'offline';document.getElementById('renderStatus').className='status '+(r.ok?'on':'off')}catch(e){renderStatus.textContent='offline';renderStatus.className='status off'}try{let r=await fetch(WORKER+'/health');let j=await r.json();workerStatus.textContent=j.ok?'online':'offline';workerStatus.className='status '+(j.ok?'on':'off');q.textContent=j.queue;busy.textContent=j.busy}catch(e){workerStatus.textContent='offline';workerStatus.className='status off'}}
+fileInput.onchange=()=>handleFile(fileInput.files[0]);
+async function handleFile(f){if(!f)return;currentFile=f;fname.textContent=f.name;drop.style.display='none';downloads.textContent='No outputs yet.';let ext=f.name.split('.').pop().toLowerCase();fmtbox.textContent=ext.toUpperCase();modebox.textContent='Original';if(ext==='emb'){log('EMB detected. Direct preview unavailable. Use Wilcom Worker to export DST/PES/JEF/PDF.');return}let fd=new FormData();fd.append('file',f);log('Parsing original file...');try{let r=await fetch(RENDER_API+'/api/parse',{method:'POST',body:fd});if(!r.ok)throw new Error('Parse failed');originalData=await r.json();origInfo.textContent=`${originalData.width_in}" × ${originalData.height_in}"`;updateStats(originalData);renderDesign(originalData);log('Original preview loaded.')}catch(e){log('Original parse failed. You can still use Wilcom Worker. '+e.message)}}
+function updateStats(d){stitches.textContent=Number(d.stitch_count||0).toLocaleString();dims.textContent=(d.width_in||'—')+'" × '+(d.height_in||'—')+'"';colors.textContent=d.color_count||'—';fmtbox.textContent=d.format||fmtbox.textContent}
+function resizeCanvas(){let r=canvas.parentElement.getBoundingClientRect();canvas.width=r.width;canvas.height=r.height;renderDesign(resultData||originalData)}window.onresize=resizeCanvas;setTimeout(resizeCanvas,200);
+function renderDesign(d){ctx.clearRect(0,0,canvas.width,canvas.height);if(!d)return;let b=d.bounds||{minX:0,minY:0,maxX:100,maxY:100};let w=b.maxX-b.minX||1,h=b.maxY-b.minY||1;let z=Math.min(canvas.width*.75/w,canvas.height*.75/h);ctx.save();ctx.translate(canvas.width/2,canvas.height/2);ctx.scale(z,z);ctx.translate(-(b.minX+b.maxX)/2,-(b.minY+b.maxY)/2);(d.colors||[]).forEach(c=>{let pts=c.points||[];ctx.strokeStyle=c.color||'#fff';ctx.lineWidth=1.5/z;ctx.lineCap='round';ctx.beginPath();let up=true;for(let i=0;i<pts.length;i++){let p=pts[i];if(p[2]!==0||up){ctx.moveTo(p[0],p[1]);up=false}else ctx.lineTo(p[0],p[1])}ctx.stroke()});ctx.restore()}
+async function calibrate(){try{let r=await fetch(WORKER+'/calibrate-width',{method:'POST'});log(await r.json())}catch(e){log('Worker offline: '+e.message)}}
+function chosenFormats(){return [...document.querySelectorAll('.format:checked')].map(x=>x.value).join(',')}
+async function startWilcomJob(){if(!currentFile){alert('Upload file first');return}let fd=new FormData();fd.append('file',currentFile);fd.append('width_in',widthIn.value.trim());fd.append('formats',chosenFormats());log('Submitting Wilcom job...');let r=await fetch(WORKER+'/jobs',{method:'POST',body:fd});let j=await r.json();log(j);if(j.ok){currentJob=j.job.id;if(poller)clearInterval(poller);poller=setInterval(checkJob,1500)}}
+async function checkJob(){let r=await fetch(WORKER+'/jobs/'+currentJob);let j=await r.json();log(j);checkAll();if(j.ok&&(j.job.status==='done'||j.job.status==='error')){clearInterval(poller);if(j.job.status==='done'){showDownloads(j.job.outputs);let first=(j.job.outputs||[]).find(o=>['dst','pes','jef'].includes(o.format));if(first)parseOutput(first);}}}
+function showDownloads(outs){downloads.innerHTML='';(outs||[]).forEach(o=>{let a=document.createElement('a');a.href=WORKER+o.download_url;a.textContent='Download '+o.format.toUpperCase()+' ('+Math.round(o.size/1024)+' KB)';a.download=o.file;downloads.appendChild(a);});}
+async function parseOutput(o){log('Parsing Wilcom resized output...');let blob=await (await fetch(WORKER+o.download_url)).blob();let file=new File([blob],o.file);let fd=new FormData();fd.append('file',file);try{let r=await fetch(RENDER_API+'/api/parse',{method:'POST',body:fd});if(!r.ok)throw new Error('Parse resized output failed');resultData=await r.json();modebox.textContent='Wilcom Output';outInfo.textContent=`${resultData.width_in}" × ${resultData.height_in}" • ${Number(resultData.stitch_count).toLocaleString()} stitches`;updateStats(resultData);renderDesign(resultData);log('Resized Wilcom output preview loaded.')}catch(e){log('Output downloaded but preview parse failed: '+e.message)}}
+checkAll();setInterval(checkAll,6000);
 </script>
 </body>
 </html>
