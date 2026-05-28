@@ -273,7 +273,8 @@ canvas,.live{width:100%;height:100%;display:block;object-fit:contain}.live{displ
 </div>
 
 <script>
-const API="https://deck-gave-besides-casting.trycloudflare.com",const WORKER="https://deck-gave-besides-casting.trycloudflare.com";let currentFile=null,currentData=null,lastOutput=null,currentJob=null,poller=null,mode='true',sim=false,simStep=0,simTimer=null;const ctx=canvas.getContext('2d'),log=x=>document.getElementById('log').textContent=typeof x==='string'?x:JSON.stringify(x,null,2);fileInput.onchange=()=>handleFile(fileInput.files[0]);
+const API="https://museum-spectrum-gibraltar-occupational.trycloudflare.com";
+const WORKER="https://museum-spectrum-gibraltar-occupational.trycloudflare.com";let currentFile=null,currentData=null,lastOutput=null,currentJob=null,poller=null,mode='true',sim=false,simStep=0,simTimer=null;const ctx=canvas.getContext('2d'),log=x=>document.getElementById('log').textContent=typeof x==='string'?x:JSON.stringify(x,null,2);fileInput.onchange=()=>handleFile(fileInput.files[0]);
 function toggleLockUI(){heightIn.disabled=lockProp.checked;heightIn.placeholder=lockProp.checked?'Auto':'Height inch';lockIcon.textContent=lockProp.checked?'🔒':'🔓';lockHelp.textContent=lockProp.checked?'Lock ON: width only. Height auto adjusts.':'Lock OFF: width + height. Calibrate lock + height first.'}toggleLockUI();
 async function checkWorker(){try{let r=await fetch(WORKER+'/health'),j=await r.json();workerStatus.textContent=j.ok?'Online':'Offline';queue.textContent=j.queue;activeFile.textContent=j.active_file||'Idle';liveStatus.textContent=j.live_available?'Ready':'Missing'}catch(e){workerStatus.textContent='Offline'}}
 setInterval(checkWorker,5000);checkWorker();
